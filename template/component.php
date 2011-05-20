@@ -222,6 +222,16 @@ class Component
 	}
 
 	/**
+	 * Get all the extensions.
+	 *
+	 * @return array
+	 */
+	public function getExtensions()
+	{
+		return $this->extensions;
+	}
+
+	/**
 	 * Is auto escaping enabled.
 	 *
 	 * @return bool
