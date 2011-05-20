@@ -196,6 +196,17 @@ class Component
 	}
 
 	/**
+	 * Fetch the cache filename.
+	 *
+	 * @return string
+	 * @param string $filename The filename (including the path) you want to know the filename for.
+	 */
+	public function getCacheFilename($filename)
+	{
+		// @todo not yet implemented
+	}
+
+	/**
 	 * Get charset.
 	 *
 	 * @return string
