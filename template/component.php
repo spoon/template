@@ -263,6 +263,18 @@ class Component
 	}
 
 	/**
+	 * Is the cached template modified.
+	 *
+	 * @return bool
+	 * @param string $template The location of the cached template file.
+	 * @param int $time The timestamp to compare with.
+	 */
+	public function isChanged($template, $time)
+	{
+		return (filemtime((string) $template) < (int) $time);
+	}
+
+	/**
 	 * Is debug mode enabled.
 	 *
 	 * @return bool
