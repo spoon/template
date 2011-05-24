@@ -379,7 +379,7 @@ class Template
 	public function render($template)
 	{
 		// template exists and is readable
-		if(!file_exists($template) || is_readable($template))
+		if(!file_exists($template) || !is_readable($template))
 		{
 			throw new Exception(sprintf('The template "%s" does NOT exist.', $template));
 		}
