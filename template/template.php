@@ -90,13 +90,14 @@ class Template
 			'condition' => new Condition(),
 			'form' => new Form(),
 		);*/
+		$this->extensions = array(); // @todo temp until we have a working extension
 	}
 
 	/**
 	 * Add an extension.
 	 *
-	 * @return Component
-	 * @param Extension $extenion
+	 * @return Template
+	 * @param Extension $extension
 	 */
 	public function addExtension(Extension $extension)
 	{
@@ -138,7 +139,7 @@ class Template
 	/**
 	 * Disable auto escaping of variables.
 	 *
-	 * @return Component
+	 * @return Template
 	 */
 	public function disableAutoEscape()
 	{
@@ -149,7 +150,7 @@ class Template
 	/**
 	 * Disable automatically reloading templates based on the modification date.
 	 *
-	 * @return Component
+	 * @return Template
 	 */
 	public function disableAutoReload()
 	{
@@ -160,7 +161,7 @@ class Template
 	/**
 	 * Disable debug mode.
 	 *
-	 * @return Component
+	 * @return Template
 	 */
 	public function disableDebug()
 	{
@@ -171,7 +172,7 @@ class Template
 	/**
 	 * Disable strict parsing of variables.
 	 *
-	 * @return Component
+	 * @return Template
 	 */
 	public function disableStrict()
 	{
@@ -182,7 +183,7 @@ class Template
 	/**
 	 * Enable auto escaping of variables.
 	 *
-	 * @return Component
+	 * @return Template
 	 */
 	public function enableAutoEscape()
 	{
@@ -193,7 +194,7 @@ class Template
 	/**
 	 * Enable auto reload.
 	 *
-	 * @return Component
+	 * @return Template
 	 */
 	public function enableAutoReload()
 	{
@@ -204,7 +205,7 @@ class Template
 	/**
 	 * Enable debug mode.
 	 *
-	 * @return Component
+	 * @return Template
 	 */
 	public function enableDebug()
 	{
@@ -215,7 +216,7 @@ class Template
 	/**
 	 * Enable strict parsing of variables.
 	 *
-	 * @return Component
+	 * @return Template
 	 */
 	public function enableStrict()
 	{
@@ -361,7 +362,7 @@ class Template
 	/**
 	 * Remove an extension from the list.
 	 *
-	 * @return Component
+	 * @return Template
 	 * @param string $name The name of the extension.
 	 */
 	public function removeExtension($name)
@@ -411,7 +412,7 @@ class Template
 	/**
 	 * Set caching directory.
 	 *
-	 * @return Component
+	 * @return Template
 	 * @param string $cache The location where the cached templates should be stored.
 	 */
 	public function setCache($cache)
@@ -423,7 +424,7 @@ class Template
 	/**
 	 * Set the charset.
 	 *
-	 * @return Component
+	 * @return Template
 	 * @param string $charset The default charset to use.
 	 */
 	public function setCharset($charset)
@@ -435,7 +436,7 @@ class Template
 	/**
 	 * Set multiple extensions at once.
 	 *
-	 * @return Component
+	 * @return Template
 	 * @param array $extensions An array of extension instances to add.
 	 */
 	public function setExtensions(array $extensions)
