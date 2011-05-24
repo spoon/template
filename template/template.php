@@ -256,7 +256,7 @@ class Template
 	 */
 	public function getCacheFilename($filename)
 	{
-		// @todo not yet implemented
+		return md5(realpath($filename)) . '_' . basename($filename) . '.php';
 	}
 
 	/**
