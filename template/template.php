@@ -388,7 +388,7 @@ class Template
 		$cache = $this->getCacheFilename($template);
 
 		// the cache file doesn't exist or it's outdated
-		if(!file_exists($cache) || ($this->autoReload() && !$this->isChanged($template, filemtime($cache))))
+		if(!file_exists($cache) || ($this->autoReload() && $this->isChanged($template, filemtime($cache))))
 		{
 			// write cached php file
 			$compiler = new Compiler($this, $template);
