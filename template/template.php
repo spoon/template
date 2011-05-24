@@ -390,19 +390,8 @@ class Template
 		// the cache file doesn't exist or it's outdated
 		if(!file_exists($cache) || ($this->autoReload() && !$this->isChanged($template, filemtime($cache))))
 		{
-			// configuration options
-			$options = array(
-				'auto_escape' => $this->autoEscape,
-				'auto_reload' => $this->autoReload,
-				'cache' => $this->cache,
-				'charset' => $this->charset,
-				'debug' => $this->debug,
-				'strict' => $this->strict
-			);
-
 			// write cached php file
-			$compiler = new Compiler($template, $options);
-			$compiler->setExtensions($this->getExtensions());
+			$compiler = new Compiler($this, $template);
 			$compiler->write();
 		}
 
