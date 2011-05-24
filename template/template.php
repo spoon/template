@@ -399,7 +399,7 @@ class Template
 	}
 
 	/**
-	 * Set caching directory.
+	 * Set the template caching directory.
 	 *
 	 * @return Template
 	 * @param string $cache The location where the cached templates should be stored.
