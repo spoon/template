@@ -1,6 +1,7 @@
 <?php
 
 namespace spoon\template;
+use spoon\template\extension\Core;
 
 class Template
 {
@@ -86,11 +87,9 @@ class Template
 		$this->strict = (bool) $options['strict'];
 
 		// load default extensions
-		/*$this->extensions = array(
-			'condition' => new Condition(),
-			'form' => new Form(),
-		);*/
-		$this->extensions = array(); // @todo temp until we have a working extension
+		$this->extensions = array(
+			'core' => new Core(),
+		);
 	}
 
 	/**
@@ -120,13 +119,11 @@ class Template
 		// only 1 argument
 		else
 		{
-			// not an array
 			if(!is_array($variable) && !is_object($variable))
 			{
 				trigger_error('If you only provide the first argument it needs to be an array/object.', E_WARNING);
 			}
 
-			// loop array & add to variables
 			foreach($variable as $key => $value)
 			{
 				$this->variables[$key] = $value;
@@ -324,7 +321,7 @@ class Template
 	 */
 	public function isChanged($template, $time)
 	{
-		return (filemtime((string) $template) < (int) $time);
+		return (filemtime((string) $template) > (int) $time);
 	}
 
 	/**
@@ -385,10 +382,10 @@ class Template
 		}
 
 		// determine cache location
-		$cache = $this->getCacheFilename($template);
+		$cache = $this->cache . '/' . $this->getCacheFilename($template);
 
 		// the cache file doesn't exist or it's outdated
-		if(!file_exists($cache) || ($this->autoReload() && $this->isChanged($template, filemtime($cache))))
+		if(!file_exists($cache) || ($this->isAutoReload() && $this->isChanged($template, filemtime($cache))))
 		{
 			// write cached php file
 			$compiler = new Compiler($this, $template);

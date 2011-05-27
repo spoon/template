@@ -1,9 +1,10 @@
 <?php
 
+use spoon\template\Autoloader;
 use spoon\template\Template;
 use spoon\template\Extension;
 
-require_once 'template/template.php';
+require_once 'template/autoloader.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
@@ -22,6 +23,7 @@ class TemplateTest extends PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		parent::setUp ();
+		Autoloader::register();
 		$this->template = new Template();
 	}
 
@@ -159,7 +161,7 @@ class TemplateTest extends PHPUnit_Framework_TestCase
 
 	public function testIsChanged()
 	{
-		$this->assertFalse($this->template->isChanged(__FILE__, time() - 10));
+		$this->assertFalse($this->template->isChanged(__FILE__, time()));
 	}
 
 	public function testIsStrict()
