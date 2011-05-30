@@ -17,7 +17,6 @@ class Core extends Extension
 	{
 		$source = $this->stripComments($source);
 		$source = $this->stripCode($source);
-
 		return $source;
 	}
 
