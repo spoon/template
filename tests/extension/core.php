@@ -42,6 +42,9 @@ class ExtensionCoreTest extends PHPUnit_Framework_TestCase
 
 		$input = '<? echo "No short opening tags mister!"; ?>';
 		$this->assertEquals('', $this->core->stripCode($input));
+
+		$input = '<?php echo FOO; ?>Big daddy!<? echo BAR; ?>';
+		$this->assertEquals('Big daddy!', $this->core->stripCode($input));
 	}
 
 	public function testStripComments()

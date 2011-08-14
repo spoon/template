@@ -44,7 +44,7 @@ class Core extends Extension
 	 */
 	public function stripCode($source)
 	{
-		return preg_replace('/\<\?(php)?(.*)\?\>/si', '', $source);
+		return preg_replace('/\<\?(php)?(.*?)\?\>/si', '', $source);
 	}
 
 	/**
