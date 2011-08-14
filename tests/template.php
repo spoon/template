@@ -81,12 +81,6 @@ class TemplateTest extends PHPUnit_Framework_TestCase
 		$this->assertFalse($this->template->isDebug());
 	}
 
-	public function testDisableStrict()
-	{
-		$this->template->disableStrict();
-		$this->assertFalse($this->template->isStrict());
-	}
-
 	public function testEnableAutoEscape()
 	{
 		$this->template->enableAutoEscape();
@@ -103,12 +97,6 @@ class TemplateTest extends PHPUnit_Framework_TestCase
 	{
 		$this->template->enableDebug();
 		$this->assertTrue($this->template->isDebug());
-	}
-
-	public function testEnableStrict()
-	{
-		$this->template->enableStrict();
-		$this->assertTrue($this->template->isStrict());
 	}
 
 	public function  testGet()
@@ -162,11 +150,6 @@ class TemplateTest extends PHPUnit_Framework_TestCase
 	public function testIsChanged()
 	{
 		$this->assertFalse($this->template->isChanged(__FILE__, time()));
-	}
-
-	public function testIsStrict()
-	{
-		$this->assertFalse($this->template->isStrict());
 	}
 
 	public function testRemove()
