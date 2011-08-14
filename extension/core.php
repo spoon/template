@@ -1,8 +1,24 @@
 <?php
 
+/*
+* This file is part of Spoon Library.
+*
+* (c) Davy Hellemans <davy@spoon-library.com>
+*
+* For the full copyright and license information, please view the license
+* file that was distributed with this source code.
+*/
+
 namespace spoon\template\extension;
 use spoon\template\Extension;
 
+/**
+ * This is the core extension. It will perform the following tasks:
+ * - strip comments
+ * - strip (php) code
+ *
+ * @author Davy Hellemans <davy@spoon-library.com>
+ */
 class Core extends Extension
 {
 	const NAME = 'core';
@@ -24,7 +40,7 @@ class Core extends Extension
 	 * Strips php code between tags from the source.
 	 *
 	 * @return string
-	 * @param string $source The string you want to strip the code from.
+	 * @param string $source The string you want to strip the php code from.
 	 */
 	public function stripCode($source)
 	{

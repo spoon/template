@@ -1,10 +1,26 @@
 <?php
 
+/*
+* This file is part of Spoon Library.
+*
+* (c) Davy Hellemans <davy@spoon-library.com>
+*
+* For the full copyright and license information, please view the license
+* file that was distributed with this source code.
+*/
+
 namespace spoon\template;
 use spoon\template\extension\Core;
 
+/**
+ * Class that holds the template variables.
+ *
+ * @author Davy Hellemans <davy@spoon-library.com>
+ */
 class Template
 {
+	const VERSION = 0.1;
+
 	/**
 	 * If enabled, variables will be automatically escaped.
 	 *
@@ -48,13 +64,6 @@ class Template
 	protected $extensions;
 
 	/**
-	 * If enabled, the template will output error messages for flawed syntax.
-	 *
-	 * @var bool
-	 */
-	protected $strict;
-
-	/**
 	 * Stack of variables & their replace values
 	 *
 	 * @var array
@@ -75,7 +84,6 @@ class Template
 			'cache' => '.',
 			'charset' => 'utf-8',
 			'debug' => false,
-			'strict' => false,
 		), $options);
 
 		// load configuration
@@ -84,7 +92,6 @@ class Template
 		$this->cache = (string) $options['cache'];
 		$this->charset = (string) $options['charset'];
 		$this->debug = (bool) $options['debug'];
-		$this->strict = (bool) $options['strict'];
 
 		// load default extensions
 		$this->extensions = array(
@@ -167,17 +174,6 @@ class Template
 	}
 
 	/**
-	 * Disable strict parsing of variables.
-	 *
-	 * @return Template
-	 */
-	public function disableStrict()
-	{
-		$this->strict = false;
-		return $this;
-	}
-
-	/**
 	 * Enable auto escaping of variables.
 	 *
 	 * @return Template
@@ -207,17 +203,6 @@ class Template
 	public function enableDebug()
 	{
 		$this->debug = true;
-		return $this;
-	}
-
-	/**
-	 * Enable strict parsing of variables.
-	 *
-	 * @return Template
-	 */
-	public function enableStrict()
-	{
-		$this->strict = true;
 		return $this;
 	}
 
@@ -335,16 +320,6 @@ class Template
 	}
 
 	/**
-	 * Is strict parsing of variables enabled.
-	 *
-	 * @return bool
-	 */
-	public function isStrict()
-	{
-		return $this->strict;
-	}
-
-	/**
 	 * Remove a variable from the list.
 	 *
 	 * @return Template
@@ -387,7 +362,6 @@ class Template
 		// the cache file doesn't exist or it's outdated
 		if(!file_exists($cache) || ($this->isAutoReload() && $this->isChanged($template, filemtime($cache))))
 		{
-			// write cached php file
 			$compiler = new Compiler($this, $template);
 			$compiler->write();
 		}

@@ -1,15 +1,21 @@
 <?php
 
+/*
+* This file is part of Spoon Library.
+*
+* (c) Davy Hellemans <davy@spoon-library.com>
+*
+* For the full copyright and license information, please view the license
+* file that was distributed with this source code.
+*/
+
 use spoon\template\Autoloader;
 use spoon\template\Template;
 use spoon\template\Extension;
 
-require_once 'template/autoloader.php';
+require_once realpath(dirname(__FILE__) . '/../') . '/autoloader.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
-/**
- * Template test case.
- */
 class TemplateTest extends PHPUnit_Framework_TestCase
 {
 	/**
@@ -17,23 +23,17 @@ class TemplateTest extends PHPUnit_Framework_TestCase
 	 */
 	private $template;
 
-	/**
-	 * Prepares the environment before running a test.
-	 */
 	protected function setUp()
 	{
-		parent::setUp ();
+		parent::setUp();
 		Autoloader::register();
 		$this->template = new Template();
 	}
 
-	/**
-	 * Cleans up the environment after running a test.
-	 */
 	protected function tearDown()
 	{
 		$this->template = null;
-		parent::tearDown ();
+		parent::tearDown();
 	}
 
 	public function testAddExtension()

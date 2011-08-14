@@ -1,0 +1,3 @@
+0.1 (xxxx-xx-xx)
+----
+- Changed the internal architecture to work with a plugin/extension based system.

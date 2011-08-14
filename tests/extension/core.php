@@ -1,26 +1,27 @@
 <?php
 
+/*
+* This file is part of Spoon Library.
+*
+* (c) Davy Hellemans <davy@spoon-library.com>
+*
+* For the full copyright and license information, please view the license
+* file that was distributed with this source code.
+*/
+
 use spoon\template\Autoloader;
-use spoon\template\Template;
-use spoon\template\Extension;
 use spoon\template\extension\Core;
 
-require_once 'template/autoloader.php';
+require_once realpath(dirname(__FILE__) . '/../../') . '/autoloader.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
-/**
- * Core test case.
- */
-class ExtensionCore extends PHPUnit_Framework_TestCase {
-
+class ExtensionCoreTest extends PHPUnit_Framework_TestCase
+{
 	/**
 	 * @var Core
 	 */
 	private $core;
 
-	/**
-	 * Prepares the environment before running a test.
-	 */
 	protected function setUp()
 	{
 		parent::setUp();
@@ -28,9 +29,6 @@ class ExtensionCore extends PHPUnit_Framework_TestCase {
 		$this->core = new Core();
 	}
 
-	/**
-	 * Cleans up the environment after running a test.
-	 */
 	protected function tearDown()
 	{
 		$this->core = null;
