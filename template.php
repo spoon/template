@@ -124,10 +124,10 @@ class Template
 		}
 
 		// determine cache location
-		$cache = $this->cache . '/' . $this->getCacheFilename($template);
+		$cache = $this->environment->getCache() . '/' . $this->environment->getCacheFilename($template);
 
 		// the cache file doesn't exist or it's outdated
-		if(!file_exists($cache) || ($this->isAutoReload() && $this->isChanged($template, filemtime($cache))))
+		if(!file_exists($cache) || ($this->environment->isAutoReload() && $this->environment->isChanged($template, filemtime($cache))))
 		{
 			$compiler = new Compiler($this, $template);
 			$compiler->write();

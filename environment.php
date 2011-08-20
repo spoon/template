@@ -10,6 +10,7 @@
 */
 
 namespace spoon\template;
+use spoon\template\extension\Core;
 
 /**
  * Used to hold all the environment specific options for templates.

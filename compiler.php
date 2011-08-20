@@ -57,7 +57,7 @@ class Compiler
 		$this->source = file_get_contents($this->filename);
 
 		// parse all extensions
-		foreach($this->template->getExtensions() as $extension)
+		foreach($this->template->getEnvironment()->getExtensions() as $extension)
 		{
 			$this->source = $extension->parse($this->source);
 		}
@@ -72,7 +72,7 @@ class Compiler
 		$this->parse();
 
 		// file location
-		$file = $this->template->getCache() . '/' . $this->template->getCacheFilename($this->filename);
+		$file = $this->template->getEnvironment()->getCache() . '/' . $this->template->getEnvironment()->getCacheFilename($this->filename);
 
 		// attempt to create the directory if needed
 		if(!is_dir(dirname($file)))
