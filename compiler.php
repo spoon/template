@@ -40,7 +40,7 @@ class Compiler
 	protected $template;
 
 	/**
-	 * Class constructor.
+	 * Constructor.
 	 *
 	 * @param Template $template The template object.
 	 * @param string $filename The location of the template you wish to compile.
@@ -51,6 +51,9 @@ class Compiler
 		$this->filename = (string) $filename;
 	}
 
+	/**
+	 * Parses the template using the environment extensions.
+	 */
 	public function parse()
 	{
 		// load filename into string
@@ -72,7 +75,8 @@ class Compiler
 		$this->parse();
 
 		// file location
-		$file = $this->template->getEnvironment()->getCache() . '/' . $this->template->getEnvironment()->getCacheFilename($this->filename);
+		$file = $this->template->getEnvironment()->getCache() . '/';
+		$file .= $this->template->getEnvironment()->getCacheFilename($this->filename);
 
 		// attempt to create the directory if needed
 		if(!is_dir(dirname($file)))
