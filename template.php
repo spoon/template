@@ -11,7 +11,6 @@
 
 namespace spoon\template;
 use spoon\template\Environment;
-use spoon\template\extension\Core;
 
 /**
  * Class that holds the template variables.
