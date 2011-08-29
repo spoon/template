@@ -36,11 +36,6 @@ class EnvironmentTest extends PHPUnit_Framework_TestCase
 		parent::tearDown();
 	}
 
-	public function testAddExtension()
-	{
-		// @todo not yet implemented
-	}
-
 	public function testDisableAutoEscape()
 	{
 		$this->environment->disableAutoEscape();
@@ -94,16 +89,6 @@ class EnvironmentTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('utf-8', $this->environment->getCharset());
 	}
 
-	public function testGetExtension()
-	{
-		// @todo not yet implemented
-	}
-
-	public function testGetExtensions()
-	{
-		// @todo not yet implemented
-	}
-
 	public function testIsAutoEscape()
 	{
 		$this->assertTrue($this->environment->isAutoEscape());
@@ -124,11 +109,6 @@ class EnvironmentTest extends PHPUnit_Framework_TestCase
 		$this->assertFalse($this->environment->isChanged(__FILE__, time()));
 	}
 
-	public function testRemoveExtension()
-	{
-		// @todo not yet implemented
-	}
-
 	public function testSetCache()
 	{
 		$this->environment->setCache(__DIR__);
@@ -139,10 +119,5 @@ class EnvironmentTest extends PHPUnit_Framework_TestCase
 	{
 		$this->environment->setCharset('iso-8859-1');
 		$this->assertEquals('iso-8859-1', $this->environment->getCharset());
-	}
-
-	public function testSetExtensions()
-	{
-		// @todo not yet implemented
 	}
 }
