@@ -114,8 +114,62 @@ class Token
 		return $this->value;
 	}
 
-	public static function typeToString()
+	/**
+	 * Returns the type as a string representation.
+	 *
+	 * @return string
+	 * @param int $type
+	 */
+	public static function typeToString($type)
 	{
-		// @todo write me
+		switch($type)
+		{
+			case self::EOF:
+				return 'EOF';
+				break;
+
+			case self::TEXT:
+				return 'TEXT';
+				break;
+
+			case self::BLOCK_START:
+				return 'BLOCK_START';
+				break;
+
+			case self::BLOCK_END:
+				return 'BLOCK_END';
+				break;
+
+			case self::VAR_START:
+				return 'VAR_START';
+				break;
+
+			case self::VAR_END:
+				return 'VAR_END';
+				break;
+
+			case self::NAME:
+				return 'NAME';
+				break;
+
+			case self::NUMBER:
+				return 'NUMBER';
+				break;
+
+			case self::STRING:
+				return 'STRING';
+				break;
+
+			case self::OPERATOR:
+				return 'OPERATOR';
+				break;
+
+			case self::PUNCTUATION:
+				return 'PUNCTUATION';
+				break;
+
+			default:
+				throw new Exception(sprintf('There is no token type "%s"', $type));
+		}
 	}
 }
