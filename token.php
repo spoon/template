@@ -12,18 +12,23 @@
 namespace spoon\template;
 
 /**
- * @todo write some explanation about what a token actually represents.
+ * This class represents a single token with some extra information such as its line number and
+ * type.
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
 class Token
 {
-	// @todo these values are not final
+	/**
+	 * List of token types.
+	 *
+	 * @var int
+	 */
 	const EOF = -1;
 	const TEXT = 0;
 	const BLOCK_START = 1;
-	const VAR_START = 2;
-	const BLOCK_END = 3;
+	const BLOCK_END = 2;
+	const VAR_START = 3;
 	const VAR_END = 4;
 	const NAME = 5;
 	const NUMBER = 6;
