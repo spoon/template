@@ -73,7 +73,10 @@ class Token
 	 */
 	public function __toString()
 	{
-		// @todo write me
+		$string = '[line]: ' . $this->line . "\n";
+		$string .= '[type]: ' . $this->type . "\n";
+		$string .= '[value]: ' . $this->value . "\n";
+		return $string;
 	}
 
 	/**
