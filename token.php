@@ -79,7 +79,7 @@ class Token
 	public function __toString()
 	{
 		$string = '[line]: ' . $this->line . "\n";
-		$string .= '[type]: ' . $this->type . "\n";
+		$string .= '[type]: ' . $this->typeToString($this->type) . "\n";
 		$string .= '[value]: ' . $this->value . "\n";
 		return $string;
 	}
