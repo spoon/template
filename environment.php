@@ -55,11 +55,11 @@ class Environment
 	protected $debug;
 
 	/**
-	 * An array of extension instances.
+	 * List of all modifiers that apply in this environment.
 	 *
 	 * @var array
 	 */
-	protected $extensions;
+	protected $modifiers;
 
 	/**
 	 * Class constructor.
@@ -84,21 +84,27 @@ class Environment
 		$this->charset = (string) $options['charset'];
 		$this->debug = (bool) $options['debug'];
 
-		// load default extensions
-		$this->extensions = array(
-			'core' => new Core(),
+		// load default modifiers
+		$this->modifiers = array(
+			'dump' => array('spoon\debug\Debug', 'dump')
 		);
 	}
 
 	/**
-	 * Add an extension.
+	 * Add a modifier with a callback.
 	 *
 	 * @return Template
-	 * @param Extension $extension
+	 * @param string $name
+	 * @param mixed $value The value should be a valid callback (see http://php.net/manual/en/language.pseudo-types.php)
 	 */
-	public function addExtension(Extension $extension)
+	public function addModifier($name, $value)
 	{
-		$this->extensions[$extension->getName()] = $extension;
+		if(!preg_match('/^[a-z]+[a-z0-9_]*$/i', $name))
+		{
+			throw new Exception(sprintf('Modifier "%s" is not following the naming conventions', $name));
+		}
+
+		$this->modifiers[(string) $name] = $value;
 		return $this;
 	}
 
@@ -200,29 +206,29 @@ class Environment
 	}
 
 	/**
-	 * Get a specific extension instance.
+	 * Get a specific modifier callback.
 	 *
-	 * @return Extension
+	 * @return mixed
 	 * @param string $name The name of the extension.
 	 */
-	public function getExtension($name)
+	public function getModifier($name)
 	{
-		if(!isset($this->extensions[$name]))
+		if(!isset($this->modifiers[$name]))
 		{
-			throw new Exception(sprintf('The "%s" extension is not enabled.', (string) $name));
+			throw new Exception(sprintf('There is no "%s" modifier.', (string) $name));
 		}
 
-		return $this->extensions[$name];
+		return $this->modifiers[$name];
 	}
 
 	/**
-	 * Get all the extensions.
+	 * Get all the modifiers.
 	 *
 	 * @return array
 	 */
-	public function getExtensions()
+	public function getModifiers()
 	{
-		return $this->extensions;
+		return $this->modifiers;
 	}
 
 	/**
@@ -268,14 +274,14 @@ class Environment
 	}
 
 	/**
-	 * Remove an extension from the list.
+	 * Remove a modifier from the list.
 	 *
 	 * @return Template
-	 * @param string $name The name of the extension.
+	 * @param string $name
 	 */
-	public function removeExtension($name)
+	public function removeModifier($name)
 	{
-		unset($this->extensions[$name]);
+		unset($this->modifiers[$name]);
 		return $this;
 	}
 
@@ -300,22 +306,6 @@ class Environment
 	public function setCharset($charset)
 	{
 		$this->charset = (string) $charset;
-		return $this;
-	}
-
-	/**
-	 * Set multiple extensions at once.
-	 *
-	 * @return Template
-	 * @param array $extensions An array of extension instances to add.
-	 */
-	public function setExtensions(array $extensions)
-	{
-		foreach($extensions as $extension)
-		{
-			$this->addExtension($extension);
-		}
-
 		return $this;
 	}
 }

@@ -36,6 +36,26 @@ class EnvironmentTest extends PHPUnit_Framework_TestCase
 		parent::tearDown();
 	}
 
+	public function testAddModifier()
+	{
+		$this->environment->addModifier('a', 'dump');
+		$this->environment->addModifier('a_', 'dump');
+		$this->environment->addModifier('a9', 'dump');
+		$this->environment->addModifier('a_9', 'dump');
+		$this->environment->addModifier('a9_', 'dump');
+		$this->environment->addModifier('a9_', 'dump');
+	}
+
+	/**
+	 * @expectedException Exception
+	 */
+	public function testAddModifierFailure()
+	{
+		$this->environment->addModifier('9', 'dump');
+		$this->environment->addModifier('_', 'dump');
+		$this->environment->addModifier('du mp', 'dump');
+	}
+
 	public function testDisableAutoEscape()
 	{
 		$this->environment->disableAutoEscape();
@@ -89,6 +109,26 @@ class EnvironmentTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('utf-8', $this->environment->getCharset());
 	}
 
+	public function testGetModifier()
+	{
+		$this->environment->addModifier('dump', 'dump');
+		$this->assertEquals('dump', $this->environment->getModifier('dump'));
+
+		$this->environment->addModifier('dump', array('Debug', 'dump'));
+		$this->assertEquals(array('Debug', 'dump'), $this->environment->getModifier('dump'));
+
+		$this->environment->addModifier('dump', 'Debug::dump');
+		$this->assertEquals('Debug::dump', $this->environment->getModifier('dump'));
+	}
+
+	/**
+	 * @expectedException Exception
+	 */
+	public function testGetModifierFailure()
+	{
+		$this->environment->getModifier('doesNotExist');
+	}
+
 	public function testIsAutoEscape()
 	{
 		$this->assertTrue($this->environment->isAutoEscape());
@@ -107,6 +147,13 @@ class EnvironmentTest extends PHPUnit_Framework_TestCase
 	public function testIsChanged()
 	{
 		$this->assertFalse($this->environment->isChanged(__FILE__, time()));
+	}
+
+	public function testRemoveModifier()
+	{
+		$this->environment->addModifier('dump', 'spoon\debug\Debug::dump');
+		$this->environment->removeModifier('dump');
+		$this->assertEquals(array(), $this->environment->getModifiers());
 	}
 
 	public function testSetCache()
