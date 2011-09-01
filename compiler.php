@@ -52,27 +52,12 @@ class Compiler
 	}
 
 	/**
-	 * Parses the template using the environment extensions.
-	 */
-	public function parse()
-	{
-		// load filename into string
-		$this->source = file_get_contents($this->filename);
-
-		// parse all extensions
-		foreach($this->template->getEnvironment()->getExtensions() as $extension)
-		{
-			$this->source = $extension->parse($this->source);
-		}
-	}
-
-	/**
 	 * Writes the parsed template to its cache file.
 	 */
 	public function write()
 	{
-		// parse all the extensions
-		$this->parse();
+		// load filename into string
+		$this->source = file_get_contents($this->filename);
 
 		// file location
 		$file = $this->template->getEnvironment()->getCache() . '/';
