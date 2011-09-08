@@ -9,9 +9,11 @@
 * file that was distributed with this source code.
 */
 
-namespace Spoon\Template;
+namespace Spoon\Template\Tests;
+
 use Spoon\Template\Autoloader;
 use Spoon\Template\Environment;
+use Spoon\Template\Token;
 use Spoon\Template\Lexer;
 
 require_once realpath(dirname(__FILE__) . '/../') . '/Autoloader.php';
@@ -37,13 +39,89 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 		parent::tearDown();
 	}
 
-	/**
-	 * @expectedException Exception
-	 */
-	public function testException()
+	public function testVariable()
 	{
-		throw new Exception('kaka'); // @todo remove me
+		$source = '{$foo}';
+		$expected = array(
+			new Token(Token::VAR_START, null, 1),
+			new Token(Token::NAME, 'foo', 1),
+			new Token(Token::VAR_END, null, 1),
+			new Token(Token::EOF, null, 1)
+		);
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
+
+		$source = '{$foo.bar}';
+		$expected = array(
+			new Token(Token::VAR_START, null, 1),
+			new Token(Token::NAME, 'foo', 1),
+			new Token(Token::PUNCTUATION, '.', 1),
+			new Token(Token::NAME, 'bar', 1),
+			new Token(Token::VAR_END, null, 1),
+			new Token(Token::EOF, null, 1)
+		);
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
+
+		$source = '{$foo.bar.baz}';
+		$expected = array(
+			new Token(Token::VAR_START, null, 1),
+			new Token(Token::NAME, 'foo', 1),
+			new Token(Token::PUNCTUATION, '.', 1),
+			new Token(Token::NAME, 'bar', 1),
+			new Token(Token::PUNCTUATION, '.', 1),
+			new Token(Token::NAME, 'baz', 1),
+			new Token(Token::VAR_END, null, 1),
+			new Token(Token::EOF, null, 1)
+		);
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
 	}
 
-	// @todo test possible blocks, vars and comments
+	public function testVariableModifiers()
+	{
+		// one modifier
+		$source = '{$foo|upper}';
+		$expected = array(
+			new Token(Token::VAR_START, null, 1),
+			new Token(Token::NAME, 'foo', 1),
+			new Token(Token::PUNCTUATION, '|', 1),
+			new Token(Token::NAME, 'upper', 1),
+			new Token(Token::VAR_END, null, 1),
+			new Token(Token::EOF, null, 1)
+		);
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
+
+		// chained modifiers
+		$source = '{$foo|upper|lower}';
+		$expected = array(
+			new Token(Token::VAR_START, null, 1),
+			new Token(Token::NAME, 'foo', 1),
+			new Token(Token::PUNCTUATION, '|', 1),
+			new Token(Token::NAME, 'upper', 1),
+			new Token(Token::PUNCTUATION, '|', 1),
+			new Token(Token::NAME, 'lower', 1),
+			new Token(Token::VAR_END, null, 1),
+			new Token(Token::EOF, null, 1)
+		);
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
+
+		// modifier with arguments
+		$source = '{$foo|rand(1,2)}';
+		$expected = array(
+			new Token(Token::VAR_START, null, 1),
+			new Token(Token::NAME, 'foo', 1),
+			new Token(Token::PUNCTUATION, '|', 1),
+			new Token(Token::NAME, 'rand', 1),
+			new Token(Token::PUNCTUATION, '(', 1),
+			new Token(Token::NUMBER, 1, 1),
+			new Token(Token::PUNCTUATION, ',', 1),
+			new Token(Token::NUMBER, 2, 1),
+			new Token(Token::PUNCTUATION, ')', 1),
+			new Token(Token::VAR_END, null, 1),
+			new Token(Token::EOF, null, 1)
+		);
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
+
+		// add some extra spaces to the arguments
+		$source = '{$foo|rand( 1 , 2 )}';
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
+	}
 }
