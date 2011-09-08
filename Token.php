@@ -9,7 +9,7 @@
 * file that was distributed with this source code.
 */
 
-namespace spoon\template;
+namespace Spoon\Template;
 
 /**
  * This class represents a single token with some extra information such as its line number and
