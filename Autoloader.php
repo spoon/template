@@ -9,7 +9,7 @@
 * file that was distributed with this source code.
 */
 
-namespace spoon\template;
+namespace Spoon\Template;
 
 /**
  * Autoloader for this component.
@@ -25,8 +25,7 @@ class Autoloader
 	 */
 	public static function autoload($class)
 	{
-		$class = strtolower($class);
-		if(strpos($class, 'spoon\\') === false)
+		if(strpos($class, 'Spoon\\') === false)
 		{
 			return '';
 		}

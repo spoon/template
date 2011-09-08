@@ -9,14 +9,15 @@
 * file that was distributed with this source code.
 */
 
-use spoon\template\Autoloader;
-use spoon\template\Environment;
-use spoon\template\Extension;
+namespace Spoon\Template\Tests;
+use Spoon\Template\Autoloader;
+use Spoon\Template\Environment;
+use Spoon\Template\Extension;
 
-require_once realpath(dirname(__FILE__) . '/../') . '/autoloader.php';
+require_once realpath(dirname(__FILE__) . '/../') . '/Autoloader.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
-class EnvironmentTest extends PHPUnit_Framework_TestCase
+class EnvironmentTest extends \PHPUnit_Framework_TestCase
 {
 	/**
 	 * @var Environment

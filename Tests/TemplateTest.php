@@ -9,14 +9,15 @@
 * file that was distributed with this source code.
 */
 
-use spoon\template\Autoloader;
-use spoon\template\Template;
-use spoon\template\Environment;
+namespace Spoon\Template\Tests;
+use Spoon\Template\Autoloader;
+use Spoon\Template\Template;
+use Spoon\Template\Environment;
 
-require_once realpath(dirname(__FILE__) . '/../') . '/autoloader.php';
+require_once realpath(dirname(__FILE__) . '/../') . '/Autoloader.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
-class TemplateTest extends PHPUnit_Framework_TestCase
+class TemplateTest extends \PHPUnit_Framework_TestCase
 {
 	/**
 	 * @var Template
@@ -47,7 +48,7 @@ class TemplateTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('bar', $this->template->get('foo'));
 
 		// objects
-		$object = new stdClass();
+		$object = new \stdClass();
 		$object->name = 'Template';
 		$object->email = 'template@spoon-library.com';
 		$this->template->assign($object);

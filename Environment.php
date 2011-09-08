@@ -9,8 +9,7 @@
 * file that was distributed with this source code.
 */
 
-namespace spoon\template;
-use spoon\template\extension\Core;
+namespace Spoon\Template;
 
 /**
  * Used to hold all the environment specific options for templates.

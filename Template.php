@@ -9,8 +9,8 @@
 * file that was distributed with this source code.
 */
 
-namespace spoon\template;
-use spoon\template\Environment;
+namespace Spoon\Template;
+use Spoon\Template\Environment;
 
 /**
  * Class that holds the template variables.
