@@ -153,4 +153,34 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 		);
 		$this->assertEquals($expected, $this->lexer->tokenize($source));
 	}
+
+
+	public function testInclude()
+	{
+		// basic include
+		$source = "{include 'test.tpl'}";
+		$expected = array(
+			new Token(Token::BLOCK_START, null, 1),
+			new Token(Token::NAME, 'include', 1),
+			new Token(Token::STRING, 'test.tpl', 1),
+			new Token(Token::BLOCK_END, null, 1),
+			new Token(Token::EOF, null, 1)
+		);
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
+
+		// double quotes
+		$source = '{include "test.tpl"}';
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
+
+		// with variable
+		$source = '{include $myTemplate}';
+		$expected = array(
+			new Token(Token::BLOCK_START, null, 1),
+			new Token(Token::NAME, 'include', 1),
+			new Token(Token::NAME, '$myTemplate', 1),
+			new Token(Token::BLOCK_END, null, 1),
+			new Token(Token::EOF, null, 1)
+		);
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
+	}
 }
