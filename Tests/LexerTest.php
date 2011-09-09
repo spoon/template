@@ -41,6 +41,7 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 
 	public function testVariable()
 	{
+		// basic variable
 		$source = '{$foo}';
 		$expected = array(
 			new Token(Token::VAR_START, null, 1),
@@ -50,6 +51,7 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 		);
 		$this->assertEquals($expected, $this->lexer->tokenize($source));
 
+		// 2 parts
 		$source = '{$foo.bar}';
 		$expected = array(
 			new Token(Token::VAR_START, null, 1),
@@ -61,6 +63,7 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 		);
 		$this->assertEquals($expected, $this->lexer->tokenize($source));
 
+		// 3 parts
 		$source = '{$foo.bar.baz}';
 		$expected = array(
 			new Token(Token::VAR_START, null, 1),
@@ -122,6 +125,32 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 
 		// add some extra spaces to the arguments
 		$source = '{$foo|rand( 1 , 2 )}';
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
+	}
+
+	public function testAdvancedVariables()
+	{
+		$source = '{$foo.bar(1).baz|upper|custom("var")}';
+		$expected = array(
+			new Token(Token::VAR_START, null, 1),
+			new Token(Token::NAME, 'foo', 1),
+			new Token(Token::PUNCTUATION, '.', 1),
+			new Token(Token::NAME, 'bar', 1),
+			new Token(Token::PUNCTUATION, '(', 1),
+			new Token(Token::NUMBER, 1, 1),
+			new Token(Token::PUNCTUATION, ')', 1),
+			new Token(Token::PUNCTUATION, '.', 1),
+			new Token(Token::NAME, 'baz', 1),
+			new Token(Token::PUNCTUATION, '|', 1),
+			new Token(Token::NAME, 'upper', 1),
+			new Token(Token::PUNCTUATION, '|', 1),
+			new Token(Token::NAME, 'custom', 1),
+			new Token(Token::PUNCTUATION, '(', 1),
+			new Token(Token::STRING, 'var', 1),
+			new Token(Token::PUNCTUATION, ')', 1),
+			new Token(Token::VAR_END, null, 1),
+			new Token(Token::EOF, null, 1)
+		);
 		$this->assertEquals($expected, $this->lexer->tokenize($source));
 	}
 }
