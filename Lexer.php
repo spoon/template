@@ -407,6 +407,6 @@ class Lexer
 		}
 
 		$this->addToken(Token::EOF);
-		return $this->tokens;
+		return new TokenStream($this->tokens, $filename);
 	}
 }
