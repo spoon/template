@@ -131,55 +131,27 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 	public function testAdvancedVariables()
 	{
 		$source = '{$foo.bar(1).baz|upper|custom("var")}';
-		$expected = array(
-			new Token(Token::VAR_START, null, 1),
-			new Token(Token::NAME, 'foo', 1),
-			new Token(Token::PUNCTUATION, '.', 1),
-			new Token(Token::NAME, 'bar', 1),
-			new Token(Token::PUNCTUATION, '(', 1),
-			new Token(Token::NUMBER, 1, 1),
-			new Token(Token::PUNCTUATION, ')', 1),
-			new Token(Token::PUNCTUATION, '.', 1),
-			new Token(Token::NAME, 'baz', 1),
-			new Token(Token::PUNCTUATION, '|', 1),
-			new Token(Token::NAME, 'upper', 1),
-			new Token(Token::PUNCTUATION, '|', 1),
-			new Token(Token::NAME, 'custom', 1),
-			new Token(Token::PUNCTUATION, '(', 1),
-			new Token(Token::STRING, 'var', 1),
-			new Token(Token::PUNCTUATION, ')', 1),
-			new Token(Token::VAR_END, null, 1),
-			new Token(Token::EOF, null, 1)
-		);
-		$this->assertEquals($expected, $this->lexer->tokenize($source));
-	}
-
-
-	public function testInclude()
-	{
-		// basic include
-		$source = "{include 'test.tpl'}";
-		$expected = array(
-			new Token(Token::BLOCK_START, null, 1),
-			new Token(Token::NAME, 'include', 1),
-			new Token(Token::STRING, 'test.tpl', 1),
-			new Token(Token::BLOCK_END, null, 1),
-			new Token(Token::EOF, null, 1)
-		);
-		$this->assertEquals($expected, $this->lexer->tokenize($source));
-
-		// double quotes
-		$source = '{include "test.tpl"}';
-		$this->assertEquals($expected, $this->lexer->tokenize($source));
-
-		// with variable
-		$source = '{include $myTemplate}';
-		$expected = array(
-			new Token(Token::BLOCK_START, null, 1),
-			new Token(Token::NAME, 'include', 1),
-			new Token(Token::NAME, '$myTemplate', 1),
-			new Token(Token::BLOCK_END, null, 1),
-			new Token(Token::EOF, null, 1)
+		$expected = new TokenStream(
+			array(
+				new Token(Token::VAR_START, null, 1),
+				new Token(Token::NAME, 'foo', 1),
+				new Token(Token::PUNCTUATION, '.', 1),
+				new Token(Token::NAME, 'bar', 1),
+				new Token(Token::PUNCTUATION, '(', 1),
+				new Token(Token::NUMBER, 1, 1),
+				new Token(Token::PUNCTUATION, ')', 1),
+				new Token(Token::PUNCTUATION, '.', 1),
+				new Token(Token::NAME, 'baz', 1),
+				new Token(Token::PUNCTUATION, '|', 1),
+				new Token(Token::NAME, 'upper', 1),
+				new Token(Token::PUNCTUATION, '|', 1),
+				new Token(Token::NAME, 'custom', 1),
+				new Token(Token::PUNCTUATION, '(', 1),
+				new Token(Token::STRING, 'var', 1),
+				new Token(Token::PUNCTUATION, ')', 1),
+				new Token(Token::VAR_END, null, 1),
+				new Token(Token::EOF, null, 1)
+			)
 		);
 		$this->assertEquals($expected, $this->lexer->tokenize($source));
 	}
