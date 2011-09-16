@@ -108,7 +108,6 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 		$expected = new TokenStream(
 			array(
 				new Token(Token::VAR_START, null, 1),
-				new Token(Token::VAR_START, null, 1),
 				new Token(Token::NAME, 'foo', 1),
 				new Token(Token::PUNCTUATION, '|', 1),
 				new Token(Token::NAME, 'upper', 1),
