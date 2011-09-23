@@ -20,13 +20,12 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class TemplateTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var Template
+	 * @var Spoon\Template
 	 */
 	private $template;
 
 	protected function setUp()
 	{
-		parent::setUp();
 		Autoloader::register();
 		$this->template = new Template(new Environment());
 	}
@@ -34,7 +33,6 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 	protected function tearDown()
 	{
 		$this->template = null;
-		parent::tearDown();
 	}
 
 	public function testAssign()
@@ -57,7 +55,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($object, $this->template->get('person'));
 	}
 
-	public function  testGet()
+	public function testGet()
 	{
 		$this->template->assign('name', 'Davy Hellemans');
 		$this->assertEquals('Davy Hellemans', $this->template->get('name'));
