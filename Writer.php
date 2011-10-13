@@ -12,7 +12,7 @@
 namespace Spoon\Template;
 
 /**
- * @todo write description
+ * This class is used to do the actually writing of the compiled templates.
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
@@ -36,7 +36,6 @@ class Writer
 	 * String containing the source written so far
 	 *
 	 * @var string
-	 * @var unknown_type
 	 */
 	protected $source;
 
