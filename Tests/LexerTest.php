@@ -54,8 +54,6 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 		);
 		$this->assertEquals($expected, $this->lexer->tokenize($source));
 
-		return;
-
 		// 2 parts
 		$source = '{$foo.bar}';
 		$expected = new TokenStream(
