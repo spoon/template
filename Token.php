@@ -114,6 +114,27 @@ class Token
 		return $this->value;
 	}
 
+	// @todo refactor me
+	public function test($type, $values = null)
+	{
+		if($this->type === $type)
+		{
+			if(is_array($values))
+			{
+				return in_array($this->value, $values);
+			}
+
+			elseif($values !== null)
+			{
+				return $this->value === $values;
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Returns the type as a string representation.
 	 *
