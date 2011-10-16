@@ -73,7 +73,6 @@ class WriterTest extends \PHPUnit_Framework_TestCase
 
 	public function testLineNumbers()
 	{
-
 		$this->writer->write("My first class\n", 1);
 		$expected = "// line 1\nMy first class\n";
 		$this->assertEquals($expected, $this->writer->getSource());
