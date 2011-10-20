@@ -1,6 +1,6 @@
 0.1 (xxxx-xx-xx)
 ----
-- Changed the internal architecture to work with a plugin/extension based system.
+- Changed the internal architecture to work with a tokenizer.
 - When a cached template is written, this is now done using a temp file to prevent errors if some
   other template instance is trying to read from this file at the same time.
-- Core::stripCode now works as intended. (non greedy regex)
+  
