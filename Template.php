@@ -10,7 +10,6 @@
 */
 
 namespace Spoon\Template;
-use Spoon\Template\Environment;
 
 /**
  * Class that holds the template variables.
@@ -24,7 +23,7 @@ class Template
 	/**
 	 * The configuration for this template.
 	 *
-	 * @var Environment
+	 * @var Spoon\Template\Environment
 	 */
 	protected $environment;
 
@@ -36,9 +35,7 @@ class Template
 	protected $variables;
 
 	/**
-	 * Class constructor.
-	 *
-	 * @param array[optional] $options An array containing options.
+	 * @param Spoon\Template\Environment $environment
 	 */
 	public function __construct(Environment $environment)
 	{
@@ -48,9 +45,9 @@ class Template
 	/**
 	 * Assign values to variables.
 	 *
-	 * @return Template
-	 * @param mixed $variable  The key to search for or an array/object with keys & values.
-	 * @param mixed[optional] $value  The value to replace the key with. Optional if first is array/object.
+	 * @param mixed $variable The key to search for or an array/object with keys & values.
+	 * @param mixed[optional] $value The value to replace the key with. Optional if first is array/object.
+	 * @return Spoon\Template
 	 */
 	public function assign($variable, $value = null)
 	{
@@ -77,8 +74,8 @@ class Template
 	/**
 	 * Fetch an already assigned variable.
 	 *
-	 * @return mixed
 	 * @param string $variable The variable you wish to retrieve from the stack.
+	 * @return mixed
 	 */
 	public function get($variable)
 	{
@@ -91,7 +88,7 @@ class Template
 	/**
 	 * Returns the environment configuration object.
 	 *
-	 * @return Environment
+	 * @return Spoon\Template\Environment
 	 */
 	public function getEnvironment()
 	{
