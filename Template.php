@@ -96,10 +96,100 @@ class Template
 	}
 
 	/**
+	 * Method used to fetch the actual value based on the context and a list of keys.
+	 *
+	 * @todo rethink the name
+	 * @todo is this the class for this method?
+	 * @todo refactoring needed?
+	 *
+	 * @param array $context
+	 * @param array $elements
+	 * @return mixed
+	 */
+	protected function getVar(array $context, array $elements)
+	{
+		// only 1 element
+		if(count($elements) == 1)
+		{
+			return $context[$elements[0]];
+		}
+
+		$i = 1;
+		foreach($elements as $index => $value)
+		{
+			/*
+			 * First element is always special, because this is always an element in the context
+			 * array
+			 */
+
+			// first element is custom
+			if($i == 1)
+			{
+				$variable = $context[$value];
+			}
+
+			// other (regular) elements
+			else
+			{
+				// an array
+				if(is_array($variable))
+				{
+					$variable = $variable[$value];
+				}
+
+				// an object
+				elseif(is_object($variable))
+				{
+					$arguments = (is_array($value)) ? $value : null;
+					$element = (is_array($value)) ? $index : $value;
+
+					// public property exists (and is not null)
+					if(property_exists($variable, $element) && isset($variable->$element))
+					{
+						$variable = $variable->$element;
+					}
+
+					// public method exists
+					elseif(method_exists($variable, $element) && is_callable(array($variable, $element)))
+					{
+						if($arguments !== null)
+						{
+							$variable = call_user_func_array(array($variable, $element), $arguments);
+						}
+
+						else $variable = $variable->$element();
+					}
+
+					// public getter method exists
+					elseif(method_exists($variable, 'get' . ucfirst($element)) && is_callable(array($variable, 'get' . ucfirst($element))))
+					{
+						$method = 'get' . ucfirst($element);
+						if($arguments !== null)
+						{
+							$variable = call_user_func_array(array($variable, $method), $arguments);
+						}
+
+						else $variable = $variable->$method();
+					}
+
+					// everythine failed
+					else $variable = null;
+				}
+
+				// not an object, nor array
+				else return null;
+			}
+			$i++;
+		}
+
+		return $variable;
+	}
+
+	/**
 	 * Remove a variable from the list.
 	 *
-	 * @return Template
 	 * @param string $variable The key to remove.
+	 * @return Spoon\Template
 	 */
 	public function remove($variable)
 	{
