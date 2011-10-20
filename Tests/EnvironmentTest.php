@@ -20,7 +20,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class EnvironmentTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var Environment
+	 * @var Spoon\Template\Environment
 	 */
 	private $environment;
 
@@ -48,7 +48,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @expectedException Exception
+	 * @expectedException Spoon\Template\Exception
 	 */
 	public function testAddModifierFailure()
 	{
@@ -123,7 +123,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @expectedException Exception
+	 * @expectedException Spoon\Template\Exception
 	 */
 	public function testGetModifierFailure()
 	{
