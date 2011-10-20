@@ -10,13 +10,11 @@
 */
 
 namespace Spoon\Template\Parser;
-use Spoon\Template\Environment;
-use Spoon\Template\SyntaxError;
 use Spoon\Template\TokenStream;
-use Spoon\Template\Token;
+use Spoon\Template\Environment;
 
 /**
- * @todo write some docs
+ * Class used to convert text tokens into PHP code.
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
@@ -36,17 +34,24 @@ class Text
 	 */
 	protected $stream;
 
+	/**
+	 * @param Spoon\Template\TokenStream
+	 * @param Spoon\Template\Environment
+	 */
 	public function __construct(TokenStream $stream, Environment $environment)
 	{
 		$this->stream = $stream;
 		$this->environment = $environment;
 	}
 
+	/**
+	 * Compiles the text token and returns its PHP code.
+	 *
+	 * @return string
+	 */
 	public function compile()
 	{
-		$string = addslashes($this->stream->getCurrent()->getValue());
-		$string = "'" . $string . "'";
-		$string = 'echo ' . $string . ";\n";
-		return $string;
+		$string = str_replace('\\"', '"', addslashes($this->stream->getCurrent()->getValue()));
+		return "echo '" . $string . "';\n";
 	}
 }
