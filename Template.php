@@ -202,24 +202,27 @@ class Template
 	 *
 	 * @param string $template The location of the template file.
 	 */
-	public function render($template)
+	public function render($filename)
 	{
 		// template exists and is readable
-		if(!file_exists($template) || !is_readable($template))
+		if(!file_exists($filename) || !is_readable($filename))
 		{
-			throw new Exception(sprintf('The template "%s" does NOT exist.', $template));
+			throw new Exception(sprintf('The template "%s" does not exist.', $filename));
 		}
 
 		// determine cache location
-		$cache = $this->environment->getCache() . '/' . $this->environment->getCacheFilename($template);
+		$cache = $this->environment->getCache() . '/' . $this->environment->getCacheFilename($filename);
 
 		// the cache file doesn't exist or it's outdated
-		if(!file_exists($cache) || ($this->environment->isAutoReload() && $this->environment->isChanged($template, filemtime($cache))))
+		if(!file_exists($cache) || ($this->environment->isAutoReload() && $this->environment->isChanged($filename, filemtime($cache))))
 		{
-			$compiler = new Compiler($this, $template);
+			$compiler = new Compiler($this, $filename);
 			$compiler->write();
 		}
 
 		require $cache;
+		$class = 'Spoon\Template\\' . basename(substr($cache, 0, -8)) . '_Template';
+		$instance = new $class($this->environment);
+		$instance->display($this->variables);
 	}
 }
