@@ -29,13 +29,6 @@ class Compiler
 	protected $filename;
 
 	/**
-	 * Compiled source.
-	 *
-	 * @var string
-	 */
-	protected $source;
-
-	/**
 	 * Template instance.
 	 *
 	 * @var Spoon\Template
@@ -55,6 +48,8 @@ class Compiler
 	/**
 	 * Compiles the template based on the tokens found in it.
 	 *
+	 * @todo write some inline docs to clarify the code
+	 *
 	 * @return string
 	 */
 	protected function compile()
@@ -62,15 +57,17 @@ class Compiler
 		$lexer = new Lexer($this->template->getEnvironment());
 		$stream = $lexer->tokenize(file_get_contents($this->filename), basename($this->filename));
 
+		// unique class based on the filename
+		$class = $this->template->getEnvironment()->getCacheFilename($this->filename);
+		$class = substr($class, 0, -8) . '_Template';
+
+		// writer object containing the parsed php code
 		$writer = new Writer();
 		$writer->write("<?php\n");
 		$writer->write("\n");
 		$writer->write('namespace Spoon\Template;' . "\n");
 		$writer->write("\n");
 		$writer->write('/* ' . $this->filename . ' */' . "\n");
-
-		$class = $this->template->getEnvironment()->getCacheFilename($this->filename);
-		$class = substr($class, 0, -8) . '_Template';
 		$writer->write("class $class extends Template\n");
 		$writer->write("{\n");
 		$writer->indent();
@@ -99,10 +96,7 @@ class Compiler
 				$token = $stream->next();
 			}
 
-			else
-			{
-				break;
-			}
+			else break;
 		}
 
 		$writer->outdent();
@@ -110,8 +104,7 @@ class Compiler
 		$writer->outdent();
 		$writer->write("}\n");
 
-		$this->source = $writer->getSource();
-		return $this->source;
+		return $writer->getSource();
 	}
 
 	/**
@@ -119,8 +112,8 @@ class Compiler
 	 */
 	public function write()
 	{
-		// load filename into string
-		$this->source = $this->compile();
+		// compile template
+		$source = $this->compile();
 
 		// file location
 		$file = $this->template->getEnvironment()->getCache() . '/';
@@ -134,7 +127,7 @@ class Compiler
 
 		// write to tempfile and rename
 		$tmpFile = tempnam(dirname($file), basename($file));
-		if(@file_put_contents($tmpFile, $this->source) !== false)
+		if(@file_put_contents($tmpFile, $source) !== false)
 		{
 			if(@rename($tmpFile, $file))
 			{
