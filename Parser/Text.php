@@ -21,15 +21,11 @@ use Spoon\Template\Environment;
 class Text
 {
 	/**
-	 * Environment.
-	 *
 	 * @var Spoon\Template\Environment
 	 */
 	protected $environment;
 
 	/**
-	 * Token stream.
-	 *
 	 * @var Spoon\Template\TokenStream
 	 */
 	protected $stream;
