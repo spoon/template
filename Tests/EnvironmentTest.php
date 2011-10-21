@@ -12,7 +12,6 @@
 namespace Spoon\Template\Tests;
 use Spoon\Template\Autoloader;
 use Spoon\Template\Environment;
-use Spoon\Template\Extension;
 
 require_once realpath(dirname(__FILE__) . '/../') . '/Autoloader.php';
 require_once 'PHPUnit/Framework/TestCase.php';
