@@ -51,6 +51,7 @@ class TokenTest extends \PHPUnit_Framework_TestCase
 
 	public function testTest()
 	{
+		// @todo implement test
 	}
 
 	public function testTypeToString()
