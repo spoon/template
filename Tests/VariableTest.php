@@ -22,7 +22,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class TokenTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var Environment
+	 * @var Spoon\Template\Environment
 	 */
 	protected $environment;
 
