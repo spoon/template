@@ -9,7 +9,6 @@
 * file that was distributed with this source code.
 */
 
-
 namespace Spoon\Template\Tests;
 use Spoon\Template;
 use Spoon\Template\Autoloader;
