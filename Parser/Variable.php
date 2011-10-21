@@ -73,7 +73,7 @@ class Variable
 			// function with arguments
 			if(is_array($value))
 			{
-				$output .= "'" . $output .= key($value) .'\' => array(' . implode(', ', $value[key($value)]) . ')';
+				$output .= "'" . key($value) .'\' => array(' . implode(', ', $value[key($value)]) . ')';
 			}
 
 			// just method/key element
