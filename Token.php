@@ -114,7 +114,15 @@ class Token
 		return $this->value;
 	}
 
-	// @todo refactor me
+	/**
+	 * Test some assertions.
+	 *
+	 * @todo refactor this method
+	 *
+	 * @param string $type
+	 * @param array[optional] $values
+	 * @return bool
+	 */
 	public function test($type, $values = null)
 	{
 		if($this->type === $type)
