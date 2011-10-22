@@ -59,10 +59,9 @@ class Variable
 	/**
 	 * Builds the variable string.
 	 *
-	 * @param bool[optional] $subVariable If true then no echo statement will be prepended.
 	 * @return string
 	 */
-	protected function build($subVariable = false)
+	protected function build()
 	{
 		$output = '$this->getVar($context, array(';
 		$count = count($this->variable);
@@ -105,12 +104,7 @@ class Variable
 		}
 
 		// prepend echo
-		if(!$subVariable)
-		{
-			$output = 'echo ' . $output . ';' . "\n";
-		}
-
-		return $output;
+		return 'echo ' . $output . ';' . "\n";
 	}
 
 	/**
@@ -141,12 +135,23 @@ class Variable
 		// @todo allow subvars
 		if(!$token->test(Token::NUMBER) && !$token->test(Token::STRING))
 		{
-			// @todo adjust message when subvars are allowed
-			throw new SyntaxError(
-				'Modifier arguments need to be either integers or strings',
-				$token->getLine(),
-				$this->stream->getFilename()
-			);
+			// subvariable
+			if($token->test(Token::NAME) && substr($token->getValue(), 0, 1) == '$')
+			{
+				$subVariable = new SubVariable($this->stream, $this->environment);
+				$arguments[] = $subVariable->compile();
+				$token = $this->stream->previous();
+			}
+
+			// not allowed
+			else
+			{
+				throw new SyntaxError(
+					'Modifier arguments need to be either integers, strings or subvars',
+					$token->getLine(),
+					$this->stream->getFilename()
+				);
+			}
 		}
 
 		// string argument
@@ -156,7 +161,7 @@ class Variable
 		}
 
 		// integer argument
-		else
+		elseif($token->getType() == Token::NUMBER)
 		{
 			$arguments[] = $token->getValue();
 		}
