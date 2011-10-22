@@ -111,7 +111,10 @@ class SubVariable
 		$key = $token->getValue();
 		$token = $this->stream->next();
 
-		// allowed next values are "." or ")"
+		/*
+		 * If the value is not "." then we assume there are no further parts for this subvariable
+		 * so we stop parsing.
+		 */
 		$value = $token->getValue();
 
 		// new key
@@ -125,7 +128,6 @@ class SubVariable
 		else
 		{
 			$this->variable[] = $key;
-			$this->stream->expect(Token::PUNCTUATION, ')');
 		}
 	}
 
@@ -143,21 +145,12 @@ class SubVariable
 		$token = $this->stream->next();
 
 		/*
-		 * Subvaribles are always used as arguments within modifiers or methods. Therefor we may
-		 * assume that the only allowed characters are: "." or ")"
+		 * If no "." is found we assume that this subvar has no more chunks so we just stop parsing
+		 * since that is the most sane thing to do.
 		 */
-		$value = $token->getValue();
-
-		// expecting keys
 		if($token->test(Token::PUNCTUATION, '.'))
 		{
 			$this->processKey();
-		}
-
-		// only thing allowed now is the end of the variable
-		else
-		{
-			$this->stream->expect(Token::PUNCTUATION, ')');
 		}
 	}
 }
