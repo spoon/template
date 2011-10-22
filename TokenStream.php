@@ -145,4 +145,20 @@ class TokenStream
 		$this->current++;
 		return $this->tokens[$this->current];
 	}
+
+	/**
+	 * Retrieve the previous token.
+	 *
+	 * @return Spoon\Template\Token
+	 */
+	public function previous()
+	{
+		if(!isset($this->tokens[$this->current - 1]))
+		{
+			throw new SyntaxError('You are already at the first token', -1, $this->filename);
+		}
+
+		$this->current--;
+		return $this->tokens[$this->current];
+	}
 }
