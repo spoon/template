@@ -20,15 +20,13 @@ use Spoon\Template\Token;
 class TokenStream
 {
 	/**
-	 * Current token.
+	 * Current token number.
 	 *
 	 * @var int
 	 */
 	protected $current = 0;
 
 	/**
-	 * Filename.
-	 *
 	 * @var string
 	 */
 	protected $filename;
@@ -41,9 +39,8 @@ class TokenStream
 	protected $tokens;
 
 	/**
-	 * Constructor.
-	 *
-	 * @param Environment $environment
+	 * @param Spoon\Template\Environment $environment
+	 * @param string[optional] $filename
 	 */
 	public function __construct(array $tokens, $filename = null)
 	{
@@ -90,7 +87,7 @@ class TokenStream
 	/**
 	 * Retrieve the current token.
 	 *
-	 * @return Token
+	 * @return Spoon\Template\Token
 	 */
 	public function getCurrent()
 	{
@@ -120,7 +117,7 @@ class TokenStream
 	/**
 	 * Look to another token without changing the current positon.
 	 *
-	 * @return Token
+	 * @return Spoon\Template\Token
 	 * @param int[optional] $number
 	 */
 	public function look($number = 1)
@@ -136,7 +133,7 @@ class TokenStream
 	/**
 	 * Retrieve the next token.
 	 *
-	 * @return Token
+	 * @return Spoon\Template\Token
 	 */
 	public function next()
 	{
