@@ -373,9 +373,9 @@ class Lexer
 	/**
 	 * Returns a stream of tokens found in the source.
 	 *
-	 * @return array
 	 * @param string $source
-	 * @param string $filename
+	 * @param string[optional] $filename
+	 * @return Spoon\Template\TokenStream
 	 */
 	public function tokenize($source, $filename = null)
 	{
