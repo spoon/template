@@ -47,7 +47,7 @@ class Template
 	 *
 	 * @param mixed $variable The key to search for or an array/object with keys & values.
 	 * @param mixed[optional] $value The value to replace the key with. Optional if first is array/object.
-	 * @return Spoon\Template
+	 * @return Spoon\Template\Template
 	 */
 	public function assign($variable, $value = null)
 	{
@@ -189,7 +189,7 @@ class Template
 	 * Remove a variable from the list.
 	 *
 	 * @param string $variable The key to remove.
-	 * @return Spoon\Template
+	 * @return Spoon\Template\Template
 	 */
 	public function remove($variable)
 	{
@@ -213,7 +213,7 @@ class Template
 		// determine cache location
 		$cache = $this->environment->getCache() . '/' . $this->environment->getCacheFilename($filename);
 
-		// the cache file doesn't exist or it's outdated
+		// the cache file doesn't exist or is outdated
 		if(!file_exists($cache) || ($this->environment->isAutoReload() && $this->environment->isChanged($filename, filemtime($cache))))
 		{
 			$compiler = new Compiler($this, $filename);
