@@ -14,6 +14,7 @@ use Spoon\Template\Autoloader;
 use Spoon\Template\Environment;
 use Spoon\Template\TokenStream;
 use Spoon\Template\Token;
+use Spoon\Template\Writer;
 use Spoon\Template\Parser\Variable;
 
 require_once realpath(dirname(__FILE__) . '/../') . '/Autoloader.php';
@@ -26,22 +27,29 @@ class TokenTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected $environment;
 
+	/**
+	 * @var Spoon\Template\Writer
+	 */
+	protected $writer;
+
 	public function setUp()
 	{
-		parent::setUp();
 		Autoloader::register();
 		$this->environment = new Environment();
+		$this->writer = new Writer();
 	}
 
 	public function tearDown()
 	{
-		parent::tearDown();
 		$this->environment = null;
+		$this->writer = null;
 	}
 
 	public function testBasic()
 	{
-		// basic variable {$foo}
+		// {$foo}
+		$expected = "// line 1\n";
+		$expected .= 'echo $this->getVar($context, array(\'foo\'));' . "\n";
 		$stream = new TokenStream(
 			array(
 				new Token(Token::VAR_START, null, 1),
@@ -51,8 +59,11 @@ class TokenTest extends \PHPUnit_Framework_TestCase
 			)
 		);
 
-		$expected = 'echo $this->getVar($context, array(\'foo\'));' . "\n";
+		// skip VAR_START
+		$stream->next();
+
 		$variable = new Variable($stream, $this->environment);
-		$this->assertEquals($expected, $variable->compile());
+		$variable->compile($this->writer);
+		$this->assertEquals($expected, $this->writer->getSource());
 	}
 }
