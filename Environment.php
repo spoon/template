@@ -61,8 +61,6 @@ class Environment
 	protected $modifiers;
 
 	/**
-	 * Class constructor.
-	 *
 	 * @param array[optional] $options An array containing options.
 	 */
 	public function __construct(array $options = array())
@@ -92,9 +90,9 @@ class Environment
 	/**
 	 * Add a modifier with a callback.
 	 *
-	 * @return Template
 	 * @param string $name
 	 * @param mixed $value The value should be a valid callback (see http://php.net/manual/en/language.pseudo-types.php)
+	 * @return Spoon\Template\Template
 	 */
 	public function addModifier($name, $value)
 	{
@@ -110,7 +108,7 @@ class Environment
 	/**
 	 * Disable auto escaping of variables.
 	 *
-	 * @return Template
+	 * @return Spoon\Template\Template
 	 */
 	public function disableAutoEscape()
 	{
@@ -121,7 +119,7 @@ class Environment
 	/**
 	 * Disable automatically reloading templates based on the modification date.
 	 *
-	 * @return Template
+	 * @return Spoon\Template\Template
 	 */
 	public function disableAutoReload()
 	{
@@ -132,7 +130,7 @@ class Environment
 	/**
 	 * Disable debug mode.
 	 *
-	 * @return Template
+	 * @return Spoon\Template\Template
 	 */
 	public function disableDebug()
 	{
@@ -143,7 +141,7 @@ class Environment
 	/**
 	 * Enable auto escaping of variables.
 	 *
-	 * @return Template
+	 * @return Spoon\Template\Template
 	 */
 	public function enableAutoEscape()
 	{
@@ -154,7 +152,7 @@ class Environment
 	/**
 	 * Enable auto reload.
 	 *
-	 * @return Template
+	 * @return Spoon\Template\Template
 	 */
 	public function enableAutoReload()
 	{
@@ -165,7 +163,7 @@ class Environment
 	/**
 	 * Enable debug mode.
 	 *
-	 * @return Template
+	 * @return Spoon\Template\Template
 	 */
 	public function enableDebug()
 	{
@@ -207,8 +205,8 @@ class Environment
 	/**
 	 * Get a specific modifier callback.
 	 *
-	 * @return mixed
 	 * @param string $name The name of the extension.
+	 * @return mixed
 	 */
 	public function getModifier($name)
 	{
@@ -253,9 +251,9 @@ class Environment
 	/**
 	 * Is the cached template modified.
 	 *
-	 * @return bool
 	 * @param string $template The location of the cached template file.
 	 * @param int $time The timestamp to compare with.
+	 * @return bool
 	 */
 	public function isChanged($template, $time)
 	{
@@ -275,8 +273,8 @@ class Environment
 	/**
 	 * Remove a modifier from the list.
 	 *
-	 * @return Template
 	 * @param string $name
+	 * @return Spoon\Template\Template
 	 */
 	public function removeModifier($name)
 	{
@@ -287,8 +285,8 @@ class Environment
 	/**
 	 * Set the template caching directory.
 	 *
-	 * @return Template
 	 * @param string $cache The location where the cached templates should be stored.
+	 * @return Spoon\Template\Template
 	 */
 	public function setCache($cache)
 	{
@@ -299,8 +297,8 @@ class Environment
 	/**
 	 * Set the charset.
 	 *
-	 * @return Template
 	 * @param string $charset The default charset to use.
+	 * @return Spoon\Template\Template
 	 */
 	public function setCharset($charset)
 	{
