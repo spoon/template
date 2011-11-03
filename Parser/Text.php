@@ -12,6 +12,7 @@
 namespace Spoon\Template\Parser;
 use Spoon\Template\TokenStream;
 use Spoon\Template\Environment;
+use Spoon\Template\Writer;
 
 /**
  * Class used to convert text tokens into PHP code.
@@ -41,13 +42,19 @@ class Text
 	}
 
 	/**
-	 * Compiles the text token and returns its PHP code.
+	 * Writes the compiled PHP code to the writer object.
 	 *
-	 * @return string
+	 * @param Spoon\Template\Writer $writer
 	 */
-	public function compile()
+	public function compile(Writer $writer)
 	{
-		$string = str_replace('\\"', '"', addslashes($this->stream->getCurrent()->getValue()));
-		return "echo '" . $string . "';\n";
+		$line = $this->stream->getCurrent()->getLine();
+
+		$writer->write("echo '", $line);
+		$writer->write(
+			str_replace('\\"', '"', addslashes($this->stream->getCurrent()->getValue())),
+			$line
+		);
+		$writer->write("';\n", $line);
 	}
 }
