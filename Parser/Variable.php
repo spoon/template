@@ -14,6 +14,7 @@ use Spoon\Template\Environment;
 use Spoon\Template\SyntaxError;
 use Spoon\Template\TokenStream;
 use Spoon\Template\Token;
+use Spoon\Template\Writer;
 
 /**
  * Class used to convert some tokens related variables into PHP code
@@ -57,16 +58,13 @@ class Variable
 	}
 
 	/**
-	 * Builds the variable string.
-	 *
-	 * @return string
+	 * @todo document me
 	 */
-	protected function build()
+	protected function build(Writer $writer)
 	{
 		$output = '$this->getVar($context, array(';
 		$count = count($this->variable);
 
-		// scan each chunk
 		foreach($this->variable as $key => $value)
 		{
 			// function with arguments
@@ -103,36 +101,31 @@ class Variable
 			$output .= 'array(' . implode(', ', $arguments) . '))';
 		}
 
-		// prepend echo
-		return 'echo ' . $output . ';' . "\n";
+		$writer->write('echo ' . $output . ';' . "\n", $this->stream->getCurrent()->getLine());
 	}
 
 	/**
 	 * Compile the first variable you come across and return its PHP code string value.
 	 *
-	 * @return string
+	 * @param Spoon\Template\Writer $writer
 	 */
-	public function compile()
+	public function compile(Writer $writer)
 	{
 		$this->processName();
-		return $this->build();
+		$this->build($writer);
 	}
 
 	/**
 	 * Processes the tokens and builds (or extends) a list of arguments.
-	 *
-	 * @todo needs to allow subvars and parse them within these arguments (not only int/string)
 	 *
 	 * @param array[optional] $arguments
 	 * @return array
 	 */
 	protected function processArguments(array $arguments = array())
 	{
-		// skip the first char "(" or possibly ","
-		$token = $this->stream->next();
+		$token = $this->stream->getCurrent();
 
 		// allowed tokens are NUMBER, STRING
-		// @todo allow subvars
 		if(!$token->test(Token::NUMBER) && !$token->test(Token::STRING))
 		{
 			// subvariable
@@ -140,6 +133,7 @@ class Variable
 			{
 				$subVariable = new SubVariable($this->stream, $this->environment);
 				$arguments[] = $subVariable->compile();
+
 				$token = $this->stream->previous();
 			}
 
@@ -173,6 +167,7 @@ class Variable
 		// ")" end of the arguments
 		if($token->test(Token::PUNCTUATION, ')'))
 		{
+			// skip ')'
 			$this->stream->next();
 			return $arguments;
 		}
@@ -180,11 +175,18 @@ class Variable
 		// comma separated
 		elseif($token->test(Token::PUNCTUATION, ','))
 		{
+			// skip ','
+			$this->stream->next();
 			return $this->processArguments($arguments);
 		}
 
 		else
 		{
+			/*
+			 * @todo allow concatenation for subvariables
+			 * eg. {$name|modifier($arg . $arg2)}
+			 * eg. {$name|modifier($arg . 'string' . $arg2)}
+			 */
 			throw new SyntaxError(
 				'The arguments seem malformed. Check your syntax.',
 				$token->getLine(),
@@ -198,71 +200,78 @@ class Variable
 	 */
 	protected function processKey()
 	{
-		// skip the "."
-		$token = $this->stream->next();
-
-		// the next part needs to be a name or number
-		if(!$token->test(Token::NAME) && !$token->test(Token::NUMBER))
-		{
-			// @todo throw syntax error
-		}
-
-		// the lexer doesn't catch keys starting with a "$"
-		if(strpos($token->getValue(), '$') !== false)
-		{
-			throw new SyntaxError(
-				'Variable keys may not start with "$"',
-				$token->getLine(),
-				$this->stream->getFilename()
-			);
-		}
-
-		// add to list of keys
-		$key = $token->getValue();
-		$token = $this->stream->next();
-
-		// allowed next values are "." or "(" or VAR_END
+		$token = $this->stream->getCurrent();
 		$value = $token->getValue();
 
-		// new key
-		if($token->test(Token::PUNCTUATION, '.'))
+		// this part needs to be a NAME or NUMBER
+		if($token->test(Token::NAME) && $value[0] != '$' || $token->test(Token::NUMBER))
 		{
-			$this->variable[] = $key;
-			$this->processKey();
-		}
+			// add to list of keys
+			$key = $token->getValue();
+			$token = $this->stream->next();
 
-		// indication the next part is a modifier
-		elseif($token->test(Token::PUNCTUATION, '|'))
-		{
-			$this->variable[] = $key;
-			$this->processModifier();
-		}
+			// allowed next values are "." or "(" or VAR_END
+			$value = $token->getValue();
 
-		// indication arguments start here
-		elseif($token->test(Token::PUNCTUATION, '('))
-		{
-			$arguments = $this->processArguments();
-			$this->variable[] = array($key => $arguments);
-			$token = $this->stream->getCurrent();
-
-			// more keys
+			// new key
 			if($token->test(Token::PUNCTUATION, '.'))
 			{
+				$this->variable[] = $key;
+				$this->stream->next();
 				$this->processKey();
 			}
 
-			// more modifiers
+			// indication the next part is a modifier
 			elseif($token->test(Token::PUNCTUATION, '|'))
 			{
+				$this->variable[] = $key;
+				$this->stream->next();
 				$this->processModifier();
+			}
+
+			// indication arguments start here
+			elseif($token->test(Token::PUNCTUATION, '('))
+			{
+				// skip '('
+				$this->stream->next();
+				$arguments = $this->processArguments();
+				$this->variable[] = array($key => $arguments);
+				$token = $this->stream->getCurrent();
+
+				// more keys
+				if($token->test(Token::PUNCTUATION, '.'))
+				{
+					$this->stream->next();
+					$this->processKey();
+				}
+
+				// more modifiers
+				elseif($token->test(Token::PUNCTUATION, '|'))
+				{
+					$this->stream->next();
+					$this->processModifier();
+				}
+			}
+
+			// end variable
+			else
+			{
+				$this->variable[] = $key;
+				$this->stream->expect(Token::VAR_END);
 			}
 		}
 
-		// end variable
+		/*
+		 * Variable keys may not start with "$" (eg {$name.$name}
+		 * The "$" is only allowed for the first part of the variable.
+		 */
 		else
 		{
-			$this->variable[] = $key;
-			$this->stream->expect(Token::VAR_END);
+			throw new SyntaxError(
+				'Variable keys may not start with $',
+				$token->getLine(),
+				$this->stream->getFilename()
+			);
 		}
 	}
 
@@ -271,8 +280,7 @@ class Variable
 	 */
 	protected function processModifier()
 	{
-		// skip the "|"
-		$token = $this->stream->next();
+		$token = $this->stream->getCurrent();
 
 		// the next part needs to be a name
 		$this->stream->expect(Token::NAME);
@@ -298,6 +306,7 @@ class Variable
 		if($token->test(Token::PUNCTUATION, '|'))
 		{
 			$this->modifiers[] = $modifier;
+			$this->stream->next();
 			$this->processModifier();
 		}
 
@@ -311,6 +320,7 @@ class Variable
 			$token = $this->stream->getCurrent();
 			if($token->test(Token::PUNCTUATION, '|'))
 			{
+				$this->stream->next();
 				$this->processModifier();
 			}
 		}
@@ -328,7 +338,7 @@ class Variable
 	 */
 	protected function processName()
 	{
-		$token = $this->stream->next();
+		$token = $this->stream->getCurrent();
 
 		// must be a name token
 		$this->stream->expect(Token::NAME);
@@ -342,12 +352,16 @@ class Variable
 		// expecting keys
 		if($token->test(Token::PUNCTUATION, '.'))
 		{
+			// skip '.'
+			$this->stream->next();
 			$this->processKey();
 		}
 
 		// expecting modifiers
 		elseif($token->test(Token::PUNCTUATION, '|'))
 		{
+			// skip '|'
+			$this->stream->next();
 			$this->processModifier();
 		}
 
