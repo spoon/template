@@ -10,9 +10,10 @@
 */
 
 namespace Spoon\Template;
-use Spoon\Template\Writer;
-use Spoon\Template\Parser\Variable;
 use Spoon\Template\Parser\Text;
+use Spoon\Template\Parser\Variable;
+use Spoon\Template\Parser\Includer;
+use Spoon\Template\Writer;
 
 /**
  * Class the compiles template files to cached php files.
@@ -31,12 +32,12 @@ class Compiler
 	/**
 	 * Template instance.
 	 *
-	 * @var Spoon\Template
+	 * @var Spoon\Template\Template
 	 */
 	protected $template;
 
 	/**
-	 * @param Spoon\Template $template The template object.
+	 * @param Spoon\Template\Template $template The template object.
 	 * @param string $filename The location of the template you wish to compile.
 	 */
 	public function __construct(Template $template, $filename)
@@ -59,9 +60,9 @@ class Compiler
 
 		// unique class based on the filename
 		$class = $this->template->getEnvironment()->getCacheFilename($this->filename);
-		$class = substr($class, 0, -8) . '_Template';
+		$class = 'S' . substr($class, 0, -8) . '_Template';
 
-		// writer object containing the parsed php code
+		// writer object which contains the parsed PHP code
 		$writer = new Writer();
 		$writer->write("<?php\n");
 		$writer->write("\n");
@@ -82,12 +83,31 @@ class Compiler
 			{
 				case Token::TEXT:
 					$text = new Text($stream, $this->template->getEnvironment());
-					$writer->write($text->compile(), $token->getLine());
+					$text->compile($writer);
 					break;
 
 				case Token::VAR_START:
+					$stream->next();
 					$variable = new Variable($stream, $this->template->getEnvironment());
-					$writer->write($variable->compile(), $token->getLine());
+					$variable->compile($writer);
+					break;
+
+				case Token::BLOCK_START:
+					$token = $stream->next();
+					switch($token->getValue())
+					{
+						case 'include':
+							$include = new Includer($stream, $this->template->getEnvironment());
+							$include->compile($writer);
+							break;
+
+						default:
+							throw new SyntaxError(
+								sprintf('There is no such template tag "%s"', $token->getValue()),
+								$token->getLine(),
+								$this->filename
+							);
+					}
 					break;
 			}
 
