@@ -12,7 +12,8 @@
 namespace Spoon\Template\Tests;
 use Spoon\Template\Autoloader;
 use Spoon\Template\Environment;
-use Spoon\Template\Lexer;
+use Spoon\Template\TokenStream;
+use Spoon\Template\Token;
 use Spoon\Template\Parser\Text;
 use Spoon\Template\Writer;
 
@@ -27,11 +28,6 @@ class TextTest extends \PHPUnit_Framework_TestCase
 	protected $environment;
 
 	/**
-	 * @var Spoon\Template\Lexer
-	 */
-	protected $lexer;
-
-	/**
 	 * @var Spoon\Template\Writer
 	 */
 	protected $writer;
@@ -40,25 +36,27 @@ class TextTest extends \PHPUnit_Framework_TestCase
 	{
 		Autoloader::register();
 		$this->environment = new Environment();
-		$this->lexer = new Lexer($this->environment);
 		$this->writer = new Writer();
 	}
 
 	public function tearDown()
 	{
 		$this->environment = null;
-		$this->lexer = null;
 		$this->writer = null;
 	}
 
 	public function testBasic()
 	{
-		$source = 'This is the content of my template file';
-		$expected = "// line 1\necho '" . $source . "';\n";
+		$expected = "// line 1\necho 'This is the content of my template file';\n";
+		$stream = new TokenStream(
+			array(
+				new Token(Token::STRING, 'This is the content of my template file', 1),
+				new Token(Token::EOF, null, 1)
+			)
+		);
 
-		$text = new Text($this->lexer->tokenize($source), $this->environment);
+		$text = new Text($stream, $this->environment);
 		$text->compile($this->writer);
-
 		$this->assertEquals($expected, $this->writer->getSource());
 	}
 }
