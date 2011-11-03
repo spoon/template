@@ -201,8 +201,9 @@ class Template
 	 * Render the template using the assigned variables.
 	 *
 	 * @param string $template The location of the template file.
+	 * @param array[optional] $variables An alternative list of variables to use.
 	 */
-	public function render($filename)
+	public function render($filename, array $variables = null)
 	{
 		// template exists and is readable
 		if(!file_exists($filename) || !is_readable($filename))
@@ -221,8 +222,8 @@ class Template
 		}
 
 		require $cache;
-		$class = 'Spoon\Template\\' . basename(substr($cache, 0, -8)) . '_Template';
+		$class = 'Spoon\Template\S' . basename(substr($cache, 0, -8)) . '_Template';
 		$instance = new $class($this->environment);
-		$instance->display($this->variables);
+		$instance->display(($variables !== null) ? $variables : $this->variables);
 	}
 }
