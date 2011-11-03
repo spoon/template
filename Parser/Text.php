@@ -48,13 +48,10 @@ class Text
 	 */
 	public function compile(Writer $writer)
 	{
+		$value = $this->stream->getCurrent()->getValue();
 		$line = $this->stream->getCurrent()->getLine();
 
-		$writer->write("echo '", $line);
-		$writer->write(
-			str_replace('\\"', '"', addslashes($this->stream->getCurrent()->getValue())),
-			$line
-		);
-		$writer->write("';\n", $line);
+		$output = "echo '" . str_replace('\\"', '"', addslashes($value)) . "';\n";
+		$writer->write($output, $this->stream->getCurrent()->getline());
 	}
 }
