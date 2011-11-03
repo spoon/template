@@ -95,16 +95,21 @@ class SubVariable
 		if(!$token->test(Token::NAME) && !$token->test(Token::NUMBER))
 		{
 			// @todo throw syntax error
+			// @todo reproduce this in unit tests
 		}
 
 		// the lexer doesn't catch keys starting with a "$"
 		if(strpos($token->getValue(), '$') !== false)
 		{
-			throw new SyntaxError(
+			$this->stream->previous();
+			return;
+
+			// @todo remove me
+			/*throw new SyntaxError(
 				'Variable keys may not start with "$"',
 				$token->getLine(),
 				$this->stream->getFilename()
-			);
+			);*/
 		}
 
 		// add to list of keys
@@ -145,11 +150,12 @@ class SubVariable
 		$token = $this->stream->next();
 
 		/*
-		 * If no "." is found we assume that this subvar has no more chunks so we just stop parsing
-		 * since that is the most sane thing to do.
+		 * If this token is a "." and only if the next one is a name token, we're going to
+		 * consider keep looking for other chunks.
 		 */
-		if($token->test(Token::PUNCTUATION, '.'))
+		if($token->test(Token::PUNCTUATION, '.') && $this->stream->look()->test(Token::NAME))
 		{
+
 			$this->processKey();
 		}
 	}
