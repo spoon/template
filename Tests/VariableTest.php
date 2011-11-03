@@ -20,7 +20,7 @@ use Spoon\Template\Parser\Variable;
 require_once realpath(dirname(__FILE__) . '/../') . '/Autoloader.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
-class TokenTest extends \PHPUnit_Framework_TestCase
+class VariableTest extends \PHPUnit_Framework_TestCase
 {
 	/**
 	 * @var Spoon\Template\Environment
