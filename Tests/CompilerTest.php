@@ -16,7 +16,7 @@ use Spoon\Template\Compiler;
 require_once realpath(dirname(__FILE__) . '/../') . '/Autoloader.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
-class EnvironmentTest extends \PHPUnit_Framework_TestCase
+class CompilerTest extends \PHPUnit_Framework_TestCase
 {
 	/**
 	 * @var Spoon\Template\Compiler
