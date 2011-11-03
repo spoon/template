@@ -184,12 +184,12 @@ class Environment
 	/**
 	 * Fetch the cache filename.
 	 *
-	 * @return string
 	 * @param string $filename The filename (including the path) you want to know the filename for.
+	 * @return string
 	 */
 	public function getCacheFilename($filename)
 	{
-		return md5(realpath($filename)) . '_' . basename($filename) . '.php';
+		return 'S' . md5(realpath($filename)) . '_' . basename($filename) . '.php';
 	}
 
 	/**
