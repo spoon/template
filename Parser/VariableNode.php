@@ -21,7 +21,7 @@ use Spoon\Template\Writer;
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
-class Variable
+class VariableNode
 {
 	/**
 	 * @var Spoon\Template\Environment

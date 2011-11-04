@@ -11,7 +11,7 @@
 
 namespace Spoon\Template;
 use Spoon\Template\Parser\TextNode;
-use Spoon\Template\Parser\Variable;
+use Spoon\Template\Parser\VariableNode;
 use Spoon\Template\Parser\IncludeNode;
 use Spoon\Template\Writer;
 
@@ -88,7 +88,7 @@ class Compiler
 
 				case Token::VAR_START:
 					$stream->next();
-					$variable = new Variable($stream, $this->template->getEnvironment());
+					$variable = new VariableNode($stream, $this->template->getEnvironment());
 					$variable->compile($writer);
 					break;
 
