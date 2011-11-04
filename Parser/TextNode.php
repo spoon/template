@@ -19,7 +19,7 @@ use Spoon\Template\Writer;
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
-class Text
+class TextNode
 {
 	/**
 	 * @var Spoon\Template\Environment

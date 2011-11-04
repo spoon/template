@@ -10,7 +10,7 @@
 */
 
 namespace Spoon\Template;
-use Spoon\Template\Parser\Text;
+use Spoon\Template\Parser\TextNode;
 use Spoon\Template\Parser\Variable;
 use Spoon\Template\Parser\IncludeNode;
 use Spoon\Template\Writer;
@@ -82,7 +82,7 @@ class Compiler
 			switch($token->getType())
 			{
 				case Token::TEXT:
-					$text = new Text($stream, $this->template->getEnvironment());
+					$text = new TextNode($stream, $this->template->getEnvironment());
 					$text->compile($writer);
 					break;
 
