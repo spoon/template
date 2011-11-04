@@ -21,7 +21,7 @@ use Spoon\Template\Writer;
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
-class Includer
+class IncludeNode
 {
 	/**
 	 * List of elements that need to be chained together.

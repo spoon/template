@@ -12,7 +12,7 @@
 namespace Spoon\Template;
 use Spoon\Template\Parser\Text;
 use Spoon\Template\Parser\Variable;
-use Spoon\Template\Parser\Includer;
+use Spoon\Template\Parser\IncludeNode;
 use Spoon\Template\Writer;
 
 /**
@@ -97,7 +97,7 @@ class Compiler
 					switch($token->getValue())
 					{
 						case 'include':
-							$include = new Includer($stream, $this->template->getEnvironment());
+							$include = new IncludeNode($stream, $this->template->getEnvironment());
 							$include->compile($writer);
 							break;
 
