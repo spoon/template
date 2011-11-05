@@ -153,9 +153,9 @@ class SubVariable
 		 * If this token is a "." and only if the next one is a name token, we're going to
 		 * consider keep looking for other chunks.
 		 */
+		// @todo the next token may also be a number (eg $users.0.hobbies) which doesn't work atm
 		if($token->test(Token::PUNCTUATION, '.') && $this->stream->look()->test(Token::NAME))
 		{
-
 			$this->processKey();
 		}
 	}
