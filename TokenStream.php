@@ -59,6 +59,7 @@ class TokenStream
 	}
 
 	// @todo refactor me
+	// @todo The $message parameter out to be used for custom messages, but that is not the case now
 	public function expect($type, $value = null, $message = null)
 	{
 		$token = $this->tokens[$this->current];
