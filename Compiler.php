@@ -13,6 +13,8 @@ namespace Spoon\Template;
 use Spoon\Template\Parser\TextNode;
 use Spoon\Template\Parser\VariableNode;
 use Spoon\Template\Parser\IncludeNode;
+use Spoon\Template\Parser\ForNode;
+use Spoon\Template\Parser\EndForNode;
 use Spoon\Template\Writer;
 
 /**
@@ -99,6 +101,16 @@ class Compiler
 						case 'include':
 							$include = new IncludeNode($stream, $this->template->getEnvironment());
 							$include->compile($writer);
+							break;
+
+						case 'for':
+							$for = new ForNode($stream, $this->template->getEnvironment());
+							$for->compile($writer);
+							break;
+
+						case 'endfor';
+							$end = new EndForNode($stream, $this->template->getEnvironment());
+							$end->compile($writer);
 							break;
 
 						default:
