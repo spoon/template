@@ -379,6 +379,11 @@ class Lexer
 	 */
 	public function tokenize($source, $filename = null)
 	{
+		/*
+		 * @todo somewhere in this piece of code we need to have a check to see if each control
+		 * statement is actually closed. e.g. for every if there needs to be an endif statement
+		 */
+
 		$this->source = str_replace(array("\r\n", "\r"), "\n", $source);
 		$this->cursor = 0;
 		$this->line = 1;
