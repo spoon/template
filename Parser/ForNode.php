@@ -90,8 +90,20 @@ class ForNode
 		 * about looping objects? Won't that be crappy coco?
 		 */
 
+		// backup current context
 		$writer->write('$context[\'_parent\'] = $context;' . "\n");
-		$writer->write('foreach(' . $something .' as $context[\'' . $name . '\']):' . "\n");
+
+		// @todo comment on this
+		$writer->write('$context[\'loop\'][\'count\'] = count(' . $something . ');' . "\n");
+		$writer->write('$context[\'loop\'][\'first\'] = true;' . "\n");
+		$writer->write('$context[\'loop\'][\'last\'] = false;' . "\n");
+		$writer->write('$context[\'loop\'][\'i\'] = 1;' . "\n");
+		$writer->write('foreach(' . $something .' as $context[\'loop\'][\'key\'] => $context[\'' . $name . '\']):' . "\n");
 		$writer->indent();
+		$writer->write('if($context[\'loop\'][\'i\'] == $context[\'loop\'][\'count\']):' . "\n");
+		$writer->indent();
+		$writer->write('$context[\'loop\'][\'last\'] = true;' . "\n");
+		$writer->outdent();
+		$writer->write('endif;');
 	}
 }

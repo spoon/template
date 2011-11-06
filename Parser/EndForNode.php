@@ -52,6 +52,8 @@ class EndForNode
 	{
 		$this->stream->next();
 
+		$writer->write('$context[\'loop\'][\'first\'] = false;' . "\n");
+		$writer->write('$context[\'loop\'][\'i\']++;' . "\n");
 		$writer->outdent();
 		$writer->write('endforeach;' . "\n");
 		$writer->write('$context = $context[\'_parent\'];' . "\n");
