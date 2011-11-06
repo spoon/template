@@ -88,6 +88,12 @@ class Writer
 		// only add line number once
 		if($line !== null && $line > $this->line)
 		{
+			// add blank line (expect for the first line)
+			if($line != 1)
+			{
+				$this->source .= "\n";
+			}
+
 			$this->line = (int) $line;
 			$this->source .= $prefix . '// line ' . $this->line . "\n";
 		}

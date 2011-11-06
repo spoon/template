@@ -82,7 +82,7 @@ class WriterTest extends \PHPUnit_Framework_TestCase
 
 		$this->writer->write("\n");
 		$this->writer->write("Number 2, here we come!", 2);
-		$expected .= "\n// line 2\nNumber 2, here we come!";
+		$expected .= "\n\n// line 2\nNumber 2, here we come!";
 		$this->assertEquals($expected, $this->writer->getSource());
 	}
 }
