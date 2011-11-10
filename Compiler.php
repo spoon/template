@@ -15,10 +15,13 @@ use Spoon\Template\Parser\VariableNode;
 use Spoon\Template\Parser\IncludeNode;
 use Spoon\Template\Parser\ForNode;
 use Spoon\Template\Parser\EndForNode;
+use Spoon\Template\Parser\IfNode;
+use Spoon\Template\Parser\ElseNode;
+use Spoon\Template\Parser\EndIfNode;
 use Spoon\Template\Writer;
 
 /**
- * Class the compiles template files to cached php files.
+ * Class that compiles template files to cached php files.
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
@@ -101,6 +104,21 @@ class Compiler
 						case 'include':
 							$include = new IncludeNode($stream, $this->template->getEnvironment());
 							$include->compile($writer);
+							break;
+
+						case 'if':
+							$if = new IfNode($stream, $this->template->getEnvironment());
+							$if->compile($writer);
+							break;
+
+						case 'else':
+							$else = new ElseNode($stream, $this->template->getEnvironment());
+							$else->compile($writer);
+							break;
+
+						case 'endif':
+							$end = new EndIfNode($stream, $this->template->getEnvironment());
+							$end->compile($writer);
 							break;
 
 						case 'for':
