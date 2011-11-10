@@ -111,7 +111,12 @@ class Template
 		// only 1 element
 		if(count($elements) == 1)
 		{
-			return $context[$elements[0]];
+			if(array_key_exists($elements[0], $context))
+			{
+				return $context[$elements[0]];
+			}
+
+			return null;
 		}
 
 		$i = 1;
