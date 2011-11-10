@@ -226,7 +226,7 @@ class Template
 			$compiler->write();
 		}
 
-		require $cache;
+		require_once $cache;
 		$class = 'Spoon\Template\S' . basename(substr($cache, 0, -8)) . '_Template';
 		$instance = new $class($this->environment);
 		$instance->display(($variables !== null) ? $variables : $this->variables);
