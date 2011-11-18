@@ -82,6 +82,7 @@ class Environment
 		$this->debug = (bool) $options['debug'];
 
 		// load default modifiers
+		// @todo load actual default modifiers and not this linked crap
 		$this->modifiers = array(
 			'dump' => array('spoon\debug\Debug', 'dump')
 		);

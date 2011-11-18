@@ -98,6 +98,7 @@ class Compiler
 					$variable->compile($writer);
 					break;
 
+				// @todo implement system in the Environment class to map custom nodes
 				case Token::BLOCK_START:
 					$token = $stream->next();
 					switch($token->getValue())
