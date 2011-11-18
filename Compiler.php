@@ -159,7 +159,6 @@ class Compiler
 		$writer->write("}\n");
 		$writer->outdent();
 		$writer->write("}\n");
-
 		return $writer->getSource();
 	}
 

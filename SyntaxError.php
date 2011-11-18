@@ -19,8 +19,6 @@ namespace Spoon\Template;
 class SyntaxError extends \Exception
 {
 	/**
-	 * Constructor.
-	 *
 	 * @param string $message
 	 * @param int[optional] $line
 	 * @param string[optional] $filename

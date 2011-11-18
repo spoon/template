@@ -12,8 +12,6 @@
 namespace Spoon\Template;
 
 /**
- * Exception.
- *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
 class Exception extends \Exception
