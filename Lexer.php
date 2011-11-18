@@ -273,9 +273,9 @@ class Lexer
 
 		/*
 		 * Expression regex pattern for:
-		 * or, and, ==, !=, <, >, >=, <=, +, -,, *, /, %
+		 * or, and, not, ==, !=, <, >, >=, <=, +, -, *, /, %, ~
 		 */
-		$pattern = '/and(?=[ ()])|\>\=|\<\=|\!\=|\=\=|or(?=[ ()])|%|\+|\-|\/|\>|\<|~|\*/A';
+		$pattern = '/and(?=[ ()])|\>\=|\<\=|\!\=|\=\=|not|or(?=[ ()])|%|\+|\-|\/|\>|\<|~|\*/A';
 
 		// operators
 		if(preg_match($pattern, $this->source, $match, null, $this->cursor))
