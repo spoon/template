@@ -16,6 +16,7 @@ use Spoon\Template\Parser\IncludeNode;
 use Spoon\Template\Parser\ForNode;
 use Spoon\Template\Parser\EndForNode;
 use Spoon\Template\Parser\IfNode;
+use Spoon\Template\Parser\ElseIfNode;
 use Spoon\Template\Parser\ElseNode;
 use Spoon\Template\Parser\EndIfNode;
 use Spoon\Template\Writer;
@@ -109,6 +110,11 @@ class Compiler
 						case 'if':
 							$if = new IfNode($stream, $this->template->getEnvironment());
 							$if->compile($writer);
+							break;
+
+						case 'elseif':
+							$elseIf = new ElseIfNode($stream, $this->template->getEnvironment());
+							$elseIf->compile($writer);
 							break;
 
 						case 'else':
