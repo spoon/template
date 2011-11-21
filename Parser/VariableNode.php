@@ -315,6 +315,8 @@ class VariableNode
 		// arguments
 		elseif($token->test(Token::PUNCTUATION, '('))
 		{
+			// skip '('
+			$this->stream->next();
 			$arguments = $this->processArguments();
 			$this->modifiers[] = array($modifier => $arguments);
 
