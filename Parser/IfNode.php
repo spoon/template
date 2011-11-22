@@ -21,7 +21,7 @@ use Spoon\Template\Writer;
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
-class IfNode
+class IfNode extends Node
 {
 	/**
 	 * Counter for all opened brackets.
@@ -29,11 +29,6 @@ class IfNode
 	 * @var int
 	 */
 	protected $brackets;
-
-	/**
-	 * @var Spoon\Template\Environment
-	 */
-	protected $environment;
 
 	/**
 	 * Starting line of the if node.
@@ -46,21 +41,6 @@ class IfNode
 	 * @var string
 	 */
 	protected $output;
-
-	/**
-	 * @var Spoon\Template\TokenStream
-	 */
-	protected $stream;
-
-	/**
-	 * @param Spoon\Template\TokenStream
-	 * @param Spoon\Template\Environment
-	 */
-	public function __construct(TokenStream $stream, Environment $environment)
-	{
-		$this->stream = $stream;
-		$this->environment = $environment;
-	}
 
 	/**
 	 * Writes the compiled PHP code to the writer object.

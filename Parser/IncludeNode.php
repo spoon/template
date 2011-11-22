@@ -21,7 +21,7 @@ use Spoon\Template\Writer;
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
-class IncludeNode
+class IncludeNode extends Node
 {
 	/**
 	 * List of elements that need to be chained together.
@@ -29,26 +29,6 @@ class IncludeNode
 	 * @var array
 	 */
 	protected $elements = array();
-
-	/**
-	 * @var Spoon\Template\Environment
-	 */
-	protected $environment;
-
-	/**
-	 * @var Spoon\Template\TokenStream
-	 */
-	protected $stream;
-
-	/**
-	 * @param Spoon\Template\TokenStream
-	 * @param Spoon\Template\Environment
-	 */
-	public function __construct(TokenStream $stream, Environment $environment)
-	{
-		$this->stream = $stream;
-		$this->environment = $environment;
-	}
 
 	/**
 	 * @todo document me

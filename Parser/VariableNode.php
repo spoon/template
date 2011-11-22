@@ -21,13 +21,8 @@ use Spoon\Template\Writer;
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
-class VariableNode
+class VariableNode extends Node
 {
-	/**
-	 * @var Spoon\Template\Environment
-	 */
-	protected $environment;
-
 	/**
 	 * List of modifiers (and their arguments) for this variable.
 	 *
@@ -36,26 +31,11 @@ class VariableNode
 	protected $modifiers = array();
 
 	/**
-	 * @var Spoon\Template\TokenStream
-	 */
-	protected $stream;
-
-	/**
 	 * List of chunks for this variable optionally arguments (in case used as methods)
 	 *
 	 * @var array
 	 */
 	protected $variable = array();
-
-	/**
-	 * @param Spoon\Template\TokenStream $stream
-	 * @param Spoon\Template\Environment $environment
-	 */
-	public function __construct(TokenStream $stream, Environment $environment)
-	{
-		$this->stream = $stream;
-		$this->environment = $environment;
-	}
 
 	/**
 	 * @todo document me

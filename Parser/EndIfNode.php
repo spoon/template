@@ -10,8 +10,6 @@
 */
 
 namespace Spoon\Template\Parser;
-use Spoon\Template\SyntaxError;
-use Spoon\Template\Token;
 use Spoon\Template\TokenStream;
 use Spoon\Template\Environment;
 use Spoon\Template\Writer;
@@ -21,28 +19,8 @@ use Spoon\Template\Writer;
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
-class EndIfNode
+class EndIfNode extends Node
 {
-	/**
-	 * @var Spoon\Template\Environment
-	 */
-	protected $environment;
-
-	/**
-	 * @var Spoon\Template\TokenStream
-	 */
-	protected $stream;
-
-	/**
-	 * @param Spoon\Template\TokenStream
-	 * @param Spoon\Template\Environment
-	 */
-	public function __construct(TokenStream $stream, Environment $environment)
-	{
-		$this->stream = $stream;
-		$this->environment = $environment;
-	}
-
 	/**
 	 * Writes the compiled PHP code to the writer object.
 	 *
