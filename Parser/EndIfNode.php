@@ -51,6 +51,6 @@ class EndIfNode
 	public function compile(Writer $writer)
 	{
 		$writer->outdent();
-		$writer->write('endif;');
+		$writer->write("endif;\n");
 	}
 }

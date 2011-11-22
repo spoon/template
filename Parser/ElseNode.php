@@ -51,7 +51,7 @@ class ElseNode
 	public function compile(Writer $writer)
 	{
 		$writer->outdent();
-		$writer->write('else:');
+		$writer->write("else:\n");
 		$writer->indent();
 	}
 }
