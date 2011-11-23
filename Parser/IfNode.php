@@ -41,6 +41,15 @@ class IfNode extends Node
 	protected $output;
 
 	/**
+	 * Makes sure the output is just a bit more clean.
+	 */
+	protected function cleanup()
+	{
+		$this->output = trim($this->output);
+		$this->output = str_replace(array('( ', '! '), array('(', '!'), $this->output);
+	}
+
+	/**
 	 * Writes the compiled PHP code to the writer object.
 	 *
 	 * @param Spoon\Template\Writer $writer
@@ -50,8 +59,7 @@ class IfNode extends Node
 		$this->line = $this->stream->next()->getLine();
 
 		$this->process();
-		$this->output = trim($this->output);
-		$this->output = str_replace(array('( ', '! '), array('(', '!'), $this->output);
+		$this->cleanup();
 
 		if($this->brackets != 0)
 		{

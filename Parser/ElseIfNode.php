@@ -30,8 +30,7 @@ class ElseIfNode extends IfNode
 		$this->line = $this->stream->next()->getLine();
 
 		$this->process();
-		$this->output = trim($this->output);
-		$this->output = str_replace(array('( ', '! '), array('(', '!'), $this->output);
+		$this->cleanup();
 
 		if($this->brackets != 0)
 		{
