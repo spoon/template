@@ -17,7 +17,7 @@ use Spoon\Template\Environment;
 use Spoon\Template\Writer;
 
 /**
- * @todo document me
+ * Almost completely the same as the if node.
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
@@ -42,7 +42,7 @@ class ElseIfNode extends IfNode
 		}
 
 		$writer->outdent();
-		$writer->write('elseif(' . $this->output . '):');
+		$writer->write('elseif(' . $this->output . "):\n");
 		$writer->indent();
 	}
 }

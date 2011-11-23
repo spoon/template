@@ -61,7 +61,7 @@ class IfNode extends Node
 			exit('Not all opened brackets were properly closed');
 		}
 
-		$writer->write('if(' . $this->output . '):');
+		$writer->write('if(' . $this->output . "):\n");
 		$writer->indent();
 	}
 
