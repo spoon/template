@@ -12,8 +12,6 @@
 namespace Spoon\Template\Parser;
 use Spoon\Template\SyntaxError;
 use Spoon\Template\Token;
-use Spoon\Template\TokenStream;
-use Spoon\Template\Environment;
 use Spoon\Template\Writer;
 
 /**
