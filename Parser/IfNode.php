@@ -55,8 +55,11 @@ class IfNode extends Node
 
 		if($this->brackets != 0)
 		{
-			// @todo create syntax error
-			exit('Not all opened brackets were properly closed');
+			throw new SyntaxError(
+				'Not all opened brackets were properly closed.',
+				$this->line,
+				$this->stream->getFilename()
+			);
 		}
 
 		$writer->write('if(' . $this->output . "):\n");
@@ -76,8 +79,11 @@ class IfNode extends Node
 		{
 			if(substr($token->getValue(), 0, 1) != '$')
 			{
-				// @todo create syntax error
-				exit('Variables need to start with $');
+				throw new SyntaxError(
+					'Variables should start with "$"',
+					$token->getLine(),
+					$this->stream->getFilename()
+				);
 			}
 
 			else
@@ -129,10 +135,11 @@ class IfNode extends Node
 					break;
 
 				default:
-					// @todo create syntax error
-					var_dump('unknown operator');
-					var_dump($token->getValue());
-					exit;
+					throw new SyntaxError(
+						sprintf('The operator "%s" is not supported.', $token->getValue()),
+						$token->getLine(),
+						$this->stream->getFilename()
+					);
 			}
 		}
 

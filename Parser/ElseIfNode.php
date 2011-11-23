@@ -35,7 +35,11 @@ class ElseIfNode extends IfNode
 
 		if($this->brackets != 0)
 		{
-			exit('Not all opened brackets were properly closed');
+			throw new SyntaxError(
+				'Not all opened brackets were properly closed.',
+				$this->line,
+				$this->stream->getFilename()
+			);
 		}
 
 		$writer->outdent();
