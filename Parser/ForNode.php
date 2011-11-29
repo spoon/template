@@ -32,10 +32,9 @@ class ForNode extends Node
 	{
 		$token = $this->stream->next();
 
-		// name expected, will throw an exception
+		// name expected (starting with '$')
 		if($this->stream->expect(Token::NAME))
 		{
-			// only very basic variables are allowed
 			if(substr($token->getValue(), 0, 1) != '$')
 			{
 				throw new SyntaxError(
@@ -61,14 +60,6 @@ class ForNode extends Node
 		// @todo name sucks
 		$subVariable = new SubVariable($this->stream, $this->environment);
 		$something = $subVariable->compile();
-
-		/*
-		 * @todo we should actually do something like:
-		 * foreach($something as $key => $value)
-		 *
-		 * That is in the case we want to actually be able to use the keys of course. What
-		 * about looping objects? Won't that be crappy coco?
-		 */
 
 		// backup current context
 		$writer->write('$context[\'_parent\'] = $context;' . "\n");
