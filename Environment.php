@@ -61,6 +61,16 @@ class Environment
 	protected $modifiers;
 
 	/**
+	 * List of all tags and the class they are mapped to. These classes need to extend from
+	 * the base Spoon\Template\Parser\Node class.
+	 *
+	 * @example array('if' => 'Spoon\Template\Parser\IfNode')
+	 *
+	 * @var array
+	 */
+	protected $tags;
+
+	/**
 	 * @param array[optional] $options An array containing options.
 	 */
 	public function __construct(array $options = array())
@@ -86,6 +96,17 @@ class Environment
 		$this->modifiers = array(
 			'dump' => array('spoon\debug\Debug', 'dump')
 		);
+
+		// load default tags
+		$this->tags = array(
+			'include' => 'Spoon\Template\Parser\IncludeNode',
+			'if' => 'Spoon\Template\Parser\IfNode',
+			'elseif' => 'Spoon\Template\Parser\ElseIfNode',
+			'else' => 'Spoon\Template\Parser\ElseNode',
+			'endif' => 'Spoon\Template\Parser\EndIfNode',
+			'for' => 'Spoon\Template\Parser\ForNode',
+			'endfor' => 'Spoon\Template\Parser\EndForNode'
+		);
 	}
 
 	/**
@@ -104,6 +125,25 @@ class Environment
 
 		$this->modifiers[(string) $name] = $value;
 		return $this;
+	}
+
+	/**
+	 * Add a custom tag linked to a class.
+	 *
+	 * @todo write some tests
+	 * @todo validate that this class implements an interface or extends a class?
+	 *
+	 * @param string $name
+	 * @param string $class
+	 */
+	public function addTag($name, $class)
+	{
+		if(!preg_match('/^[a-z]+[a-z0-9_]*$/i', $name))
+		{
+			throw new Exception(sprintf('Tag "%s" is not following the naming conventions', $name));
+		}
+
+		$this->tags[(string) $name] = $class;
 	}
 
 	/**
@@ -230,6 +270,16 @@ class Environment
 	}
 
 	/**
+	 * Fetch a list of all tags currently enabled for this environment.
+	 *
+	 * @return array
+	 */
+	public function getTags()
+	{
+		return $this->tags;
+	}
+
+	/**
 	 * Is auto escaping enabled.
 	 *
 	 * @return bool
@@ -280,6 +330,18 @@ class Environment
 	public function removeModifier($name)
 	{
 		unset($this->modifiers[$name]);
+		return $this;
+	}
+
+	/**
+	 * Remove a tag from the list.
+	 *
+	 * @param string $name
+	 * @return Spoon\Template\Template
+	 */
+	public function remoteTag($name)
+	{
+		unset($this->tags[$name]);
 		return $this;
 	}
 

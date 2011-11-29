@@ -12,13 +12,6 @@
 namespace Spoon\Template;
 use Spoon\Template\Parser\TextNode;
 use Spoon\Template\Parser\VariableNode;
-use Spoon\Template\Parser\IncludeNode;
-use Spoon\Template\Parser\ForNode;
-use Spoon\Template\Parser\EndForNode;
-use Spoon\Template\Parser\IfNode;
-use Spoon\Template\Parser\ElseIfNode;
-use Spoon\Template\Parser\ElseNode;
-use Spoon\Template\Parser\EndIfNode;
 use Spoon\Template\Writer;
 
 /**
@@ -82,6 +75,8 @@ class Compiler
 		$writer->write("{\n");
 		$writer->indent();
 
+		$tags = $this->template->getEnvironment()->getTags();
+
 		$token = $stream->getCurrent();
 		while(!$stream->isEof())
 		{
@@ -98,53 +93,21 @@ class Compiler
 					$variable->compile($writer);
 					break;
 
-				// @todo implement system in the Environment class to map custom nodes
 				case Token::BLOCK_START:
 					$token = $stream->next();
-					switch($token->getValue())
+
+					// validate tag existence
+					if(!isset($tags[$token->getValue()]))
 					{
-						case 'include':
-							$include = new IncludeNode($stream, $this->template->getEnvironment());
-							$include->compile($writer);
-							break;
-
-						case 'if':
-							$if = new IfNode($stream, $this->template->getEnvironment());
-							$if->compile($writer);
-							break;
-
-						case 'elseif':
-							$elseIf = new ElseIfNode($stream, $this->template->getEnvironment());
-							$elseIf->compile($writer);
-							break;
-
-						case 'else':
-							$else = new ElseNode($stream, $this->template->getEnvironment());
-							$else->compile($writer);
-							break;
-
-						case 'endif':
-							$end = new EndIfNode($stream, $this->template->getEnvironment());
-							$end->compile($writer);
-							break;
-
-						case 'for':
-							$for = new ForNode($stream, $this->template->getEnvironment());
-							$for->compile($writer);
-							break;
-
-						case 'endfor';
-							$end = new EndForNode($stream, $this->template->getEnvironment());
-							$end->compile($writer);
-							break;
-
-						default:
-							throw new SyntaxError(
-								sprintf('There is no such template tag "%s"', $token->getValue()),
-								$token->getLine(),
-								$this->filename
-							);
+						throw new SyntaxError(
+							sprintf('There is no such template tag "%s"', $token->getValue()),
+							$token->getLine(),
+							$this->filename
+						);
 					}
+
+					$node = new $tags[$token->getValue()]($stream, $this->template->getEnvironment());
+					$node->compile($writer);
 					break;
 			}
 
