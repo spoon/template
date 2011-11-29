@@ -27,19 +27,10 @@ class ElseIfNode extends IfNode
 	 */
 	public function compile(Writer $writer)
 	{
-		$this->line = $this->stream->next()->getLine();
-
+		$this->stream->next();
 		$this->process();
+		$this->validateBrackets();
 		$this->cleanup();
-
-		if($this->brackets != 0)
-		{
-			throw new SyntaxError(
-				'Not all opened brackets were properly closed.',
-				$this->line,
-				$this->stream->getFilename()
-			);
-		}
 
 		$writer->outdent();
 		$writer->write('elseif(' . $this->output . "):\n");

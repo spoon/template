@@ -29,13 +29,6 @@ class IfNode extends Node
 	protected $brackets;
 
 	/**
-	 * Starting line of the if node.
-	 *
-	 * @var int
-	 */
-	protected $line;
-
-	/**
 	 * @var string
 	 */
 	protected $output;
@@ -56,19 +49,10 @@ class IfNode extends Node
 	 */
 	public function compile(Writer $writer)
 	{
-		$this->line = $this->stream->next()->getLine();
-
+		$this->stream->next();
 		$this->process();
+		$this->validateBrackets();
 		$this->cleanup();
-
-		if($this->brackets != 0)
-		{
-			throw new SyntaxError(
-				'Not all opened brackets were properly closed.',
-				$this->line,
-				$this->stream->getFilename()
-			);
-		}
 
 		$writer->write('if(' . $this->output . "):\n");
 		$writer->indent();
@@ -172,6 +156,21 @@ class IfNode extends Node
 		if(!$token->test(Token::BLOCK_END))
 		{
 			$this->process();
+		}
+	}
+
+	/**
+	 * Basic check to see if all opened brackets were properly closed.
+	 */
+	protected function validateBrackets()
+	{
+		if($this->brackets != 0)
+		{
+			throw new SyntaxError(
+				'Not all opened brackets were properly closed.',
+				$this->line,
+				$this->stream->getFilename()
+			);
 		}
 	}
 }
