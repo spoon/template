@@ -339,7 +339,7 @@ class Environment
 	 * @param string $name
 	 * @return Spoon\Template\Template
 	 */
-	public function remoteTag($name)
+	public function removeTag($name)
 	{
 		unset($this->tags[$name]);
 		return $this;
