@@ -68,10 +68,10 @@ class ForNode extends Node
 		$writer->write('$context[\'loop\'][\'count\'] = count(' . $something . ');' . "\n");
 		$writer->write('$context[\'loop\'][\'first\'] = true;' . "\n");
 		$writer->write('$context[\'loop\'][\'last\'] = false;' . "\n");
-		$writer->write('$context[\'loop\'][\'i\'] = 1;' . "\n");
+		$writer->write('$context[\'loop\'][\'index\'] = 1;' . "\n");
 		$writer->write('foreach(' . $something .' as $context[\'loop\'][\'key\'] => $context[\'' . $name . '\']):' . "\n");
 		$writer->indent();
-		$writer->write('if($context[\'loop\'][\'i\'] == $context[\'loop\'][\'count\']):' . "\n");
+		$writer->write('if($context[\'loop\'][\'index\'] == $context[\'loop\'][\'count\']):' . "\n");
 		$writer->indent();
 		$writer->write('$context[\'loop\'][\'last\'] = true;' . "\n");
 		$writer->outdent();

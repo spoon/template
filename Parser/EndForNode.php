@@ -33,7 +33,7 @@ class EndForNode extends Node
 		$this->stream->next();
 
 		$writer->write('$context[\'loop\'][\'first\'] = false;' . "\n");
-		$writer->write('$context[\'loop\'][\'i\']++;' . "\n");
+		$writer->write('$context[\'loop\'][\'index\']++;' . "\n");
 		$writer->outdent();
 		$writer->write('endforeach;' . "\n");
 		$writer->write('$context = $context[\'_parent\'];' . "\n");
