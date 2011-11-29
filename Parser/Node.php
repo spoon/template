@@ -27,6 +27,13 @@ class Node
 	protected $environment;
 
 	/**
+	 * Starting line of the node. Considering that nodes may be spread over multiple lines.
+	 *
+	 * @var int
+	 */
+	protected $line;
+
+	/**
 	 * @var Spoon\Template\TokenStream
 	 */
 	protected $stream;
@@ -39,5 +46,6 @@ class Node
 	{
 		$this->stream = $stream;
 		$this->environment = $environment;
+		$this->line = $stream->getCurrent()->getLine();
 	}
 }
