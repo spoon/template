@@ -44,8 +44,6 @@ class Token
 	protected $line;
 
 	/**
-	 * Token type.
-	 *
 	 * @var int
 	 */
 	protected $type;
@@ -58,8 +56,6 @@ class Token
 	protected $value;
 
 	/**
-	 * Constructor.
-	 *
 	 * @param int $type
 	 * @param mixed $value
 	 * @param int $line
