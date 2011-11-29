@@ -92,10 +92,14 @@ class SubVariable
 		$token = $this->stream->next();
 
 		// the next part needs to be a name or number
+		// @todo attempt to reproduce this in the unit tests
 		if(!$token->test(Token::NAME) && !$token->test(Token::NUMBER))
 		{
-			// @todo throw syntax error
-			// @todo reproduce this in unit tests
+			throw new SyntaxError(
+				'Subvariable keys need to be either a Token::NAME or Token::NUMBER',
+				$token->getLine(),
+				$this->stream->getFilename()
+			);
 		}
 
 		// the lexer doesn't catch keys starting with a "$"
@@ -103,13 +107,6 @@ class SubVariable
 		{
 			$this->stream->previous();
 			return;
-
-			// @todo remove me
-			/*throw new SyntaxError(
-				'Variable keys may not start with "$"',
-				$token->getLine(),
-				$this->stream->getFilename()
-			);*/
 		}
 
 		// add to list of keys
@@ -130,10 +127,7 @@ class SubVariable
 		}
 
 		// end subvariable
-		else
-		{
-			$this->variable[] = $key;
-		}
+		else $this->variable[] = $key;
 	}
 
 	/**
@@ -150,11 +144,11 @@ class SubVariable
 		$token = $this->stream->next();
 
 		/*
-		 * If this token is a "." and only if the next one is a name token, we're going to
+		 * If this token is a "." and only if the next one is a name/number token, we're going to
 		 * consider keep looking for other chunks.
 		 */
-		// @todo the next token may also be a number (eg $users.0.hobbies) which doesn't work atm
-		if($token->test(Token::PUNCTUATION, '.') && $this->stream->look()->test(Token::NAME))
+		$next = $this->stream->look();
+		if($token->test(Token::PUNCTUATION, '.') && ($next->test(Token::NAME) || $next->test(Token::NUMBER)))
 		{
 			$this->processKey();
 		}
