@@ -5,3 +5,5 @@
   other template instance is trying to read from this file at the same time.
 - All nodes now inherit from the Parser\Node class. If you want to write your own tags, you need
   to do the same.
+- Implemented auto escaping for variables. This behaviour can be disabled in the Environment class
+  or overruled with the 'safe' modifier. e.g. {$name|safe}

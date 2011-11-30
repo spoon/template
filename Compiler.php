@@ -66,7 +66,7 @@ class Compiler
 		$writer->write('namespace Spoon\Template;' . "\n");
 		$writer->write("\n");
 		$writer->write('/* ' . $this->filename . ' */' . "\n");
-		$writer->write("class $class extends Template\n");
+		$writer->write("class $class extends Renderer\n");
 		$writer->write("{\n");
 		$writer->indent();
 		$writer->write('protected function display(array $context)' . "\n");
