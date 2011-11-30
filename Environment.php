@@ -95,11 +95,10 @@ class Environment
 		$this->modifiers = array(
 			'date' => 'date',
 			'dump' => 'var_dump',
-			'e' => 'htmlspecialchars',
-			'escape' => 'htmlspecialchars',
-			'lowercase' => 'strtolower',
+			'escape' => 'htmlspecialchars', // @todo should use the correct charset
+			'lowercase' => 'strtolower', // @todo what about mb_strtolower
 			'nl2br' => 'nl2br',
-			'repeat' => 'repeat',
+			'repeat' => 'str_repeat',
 			'replace' => function($text, $search, $replace) { return str_replace($search, $replace, $text); },
 			'safe' => 'safe',
 			'shuffle' => 'str_shuffle',
