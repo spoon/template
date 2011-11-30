@@ -58,16 +58,21 @@ class TokenStream
 		return implode("\n", $this->tokens);
 	}
 
-	// @todo refactor me
-	// @todo The $message parameter out to be used for custom messages, but that is not the case now
-	public function expect($type, $value = null, $message = null)
+	/**
+	 * Checks if the current token is what you expect it to be.
+	 *
+	 * @param int $type
+	 * @param mixed[optional] $value
+	 * @return Spoon\Template\Token
+	 */
+	public function expect($type, $value = null)
 	{
 		$token = $this->tokens[$this->current];
 
 		if(!$token->test($type, $value))
 		{
 			$line = $token->getLine();
-			$test = $value ? sprintf(' with value "%s"', $value) : '';
+			$message = $value ? sprintf(' with value "%s"', $value) : '';
 
 			throw new SyntaxError(
 				sprintf(
@@ -75,7 +80,7 @@ class TokenStream
 					Token::typeToString($token->getType(), $line),
 					$token->getValue(),
 					Token::typeToString($type),
-					$test
+					$message
 				),
 				$line,
 				$this->filename
