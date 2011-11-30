@@ -47,13 +47,11 @@ class ForNode extends Node
 		$token = $this->stream->next();
 
 		// 'in' expected
-		// @todo fix custom message
-		$this->stream->expect(Token::NAME, 'in', 'custom message..');
+		$this->stream->expect(Token::NAME, 'in');
 		$token = $this->stream->next();
 
-		// expected name
-		// @todo fix custom message
-		$this->stream->expect(Token::NAME, null, 'custom message about for loop');
+		// name expected
+		$this->stream->expect(Token::NAME);
 
 		// @todo name sucks
 		$subVariable = new SubVariable($this->stream, $this->environment);
