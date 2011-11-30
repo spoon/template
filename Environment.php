@@ -92,9 +92,21 @@ class Environment
 		$this->debug = (bool) $options['debug'];
 
 		// load default modifiers
-		// @todo load actual default modifiers and not this linked crap
 		$this->modifiers = array(
-			'dump' => array('spoon\debug\Debug', 'dump')
+			'date' => 'date',
+			'dump' => 'var_dump',
+			'e' => 'htmlspecialchars',
+			'escape' => 'htmlspecialchars',
+			'lowercase' => 'strtolower',
+			'nl2br' => 'nl2br',
+			'repeat' => 'repeat',
+			'replace' => function($text, $search, $replace) { return str_replace($search, $replace, $text); },
+			'safe' => 'safe',
+			'shuffle' => 'str_shuffle',
+			'sprintf' => 'sprintf',
+			'substring' => 'substr',
+			'trim' => 'trim',
+			'uppercase' => 'strtoupper'
 		);
 
 		// load default tags
