@@ -38,7 +38,9 @@ class VariableNode extends Node
 	protected $variable = array();
 
 	/**
-	 * @todo document me
+	 * Builds the variable (including modifiers) and writes to the Writer object.
+	 *
+	 * @param Spoon\Template\Writer $writer
 	 */
 	protected function build(Writer $writer)
 	{
@@ -97,8 +99,6 @@ class VariableNode extends Node
 
 	/**
 	 * Processes the tokens and builds (or extends) a list of arguments.
-	 *
-	 * @todo there still seems to be some issue with arguments.
 	 *
 	 * @param array[optional] $arguments
 	 * @return array
