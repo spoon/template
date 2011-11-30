@@ -69,6 +69,9 @@ class VariableNode extends Node
 
 		foreach($this->modifiers as $modifier)
 		{
+			// skip this core modifier
+			if($modifier == 'safe') continue;
+
 			// the variable itself is always added as an argument
 			$arguments = array($output);
 
@@ -81,6 +84,12 @@ class VariableNode extends Node
 
 			$output = 'call_user_func_array($this->environment->getModifier(\'' . $modifier . '\'), ';
 			$output .= 'array(' . implode(', ', $arguments) . '))';
+		}
+
+		// auto escape is based on the default environment setting and the optional 'safe' modifier
+		if($this->environment->isAutoEscape() && !in_array('safe', $this->modifiers))
+		{
+			$output = 'htmlspecialchars(' . $output . ', ENT_COMPAT, \'' . $this->environment->getCharset() . '\')';
 		}
 
 		$writer->write('echo ' . $output . ';' . "\n", $this->stream->getCurrent()->getLine());
