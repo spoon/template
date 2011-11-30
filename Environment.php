@@ -131,7 +131,6 @@ class Environment
 	 * Add a custom tag linked to a class.
 	 *
 	 * @todo write some tests
-	 * @todo validate that this class implements an interface or extends a class?
 	 *
 	 * @param string $name
 	 * @param string $class
@@ -141,6 +140,14 @@ class Environment
 		if(!preg_match('/^[a-z]+[a-z0-9_]*$/i', $name))
 		{
 			throw new Exception(sprintf('Tag "%s" is not following the naming conventions', $name));
+		}
+
+		// all nodes must extend from the basic one
+		if(!is_subclass_of($class, 'Spoon\Template\Parser\Node'))
+		{
+			throw new Exception(
+				sprintf('Custom tag classes need to extend from Spoon\Template\Parser\Node')
+			);
 		}
 
 		$this->tags[(string) $name] = $class;
