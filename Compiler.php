@@ -29,14 +29,12 @@ class Compiler
 	protected $filename;
 
 	/**
-	 * Template instance.
-	 *
 	 * @var Spoon\Template\Template
 	 */
 	protected $template;
 
 	/**
-	 * @param Spoon\Template\Template $template The template object.
+	 * @param Spoon\Template\Template $template The actual template object.
 	 * @param string $filename The location of the template you wish to compile.
 	 */
 	public function __construct(Template $template, $filename)

@@ -71,7 +71,7 @@ class Environment
 	protected $tags;
 
 	/**
-	 * @param array[optional] $options An array containing options.
+	 * @param array[optional] $options
 	 */
 	public function __construct(array $options = array())
 	{
