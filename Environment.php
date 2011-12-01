@@ -125,7 +125,7 @@ class Environment
 	 *
 	 * @param string $name
 	 * @param mixed $value The value should be a valid callback (see http://php.net/manual/en/language.pseudo-types.php)
-	 * @return Spoon\Template\Template
+	 * @return Spoon\Template\Environment
 	 */
 	public function addModifier($name, $value)
 	{
@@ -145,6 +145,7 @@ class Environment
 	 *
 	 * @param string $name
 	 * @param string $class
+	 * @return Spoon\Template\Environment
 	 */
 	public function addTag($name, $class)
 	{
@@ -162,12 +163,13 @@ class Environment
 		}
 
 		$this->tags[(string) $name] = $class;
+		return $this;
 	}
 
 	/**
 	 * Disable auto escaping of variables.
 	 *
-	 * @return Spoon\Template\Template
+	 * @return Spoon\Template\Environment
 	 */
 	public function disableAutoEscape()
 	{
@@ -178,7 +180,7 @@ class Environment
 	/**
 	 * Disable automatically reloading templates based on the modification date.
 	 *
-	 * @return Spoon\Template\Template
+	 * @return Spoon\Template\Environment
 	 */
 	public function disableAutoReload()
 	{
@@ -189,7 +191,7 @@ class Environment
 	/**
 	 * Disable debug mode.
 	 *
-	 * @return Spoon\Template\Template
+	 * @return Spoon\Template\Environment
 	 */
 	public function disableDebug()
 	{
@@ -200,7 +202,7 @@ class Environment
 	/**
 	 * Enable auto escaping of variables.
 	 *
-	 * @return Spoon\Template\Template
+	 * @return Spoon\Template\Environment
 	 */
 	public function enableAutoEscape()
 	{
@@ -211,7 +213,7 @@ class Environment
 	/**
 	 * Enable auto reload.
 	 *
-	 * @return Spoon\Template\Template
+	 * @return Spoon\Template\Environment
 	 */
 	public function enableAutoReload()
 	{
@@ -222,7 +224,7 @@ class Environment
 	/**
 	 * Enable debug mode.
 	 *
-	 * @return Spoon\Template\Template
+	 * @return Spoon\Template\Environment
 	 */
 	public function enableDebug()
 	{
@@ -343,7 +345,7 @@ class Environment
 	 * Remove a modifier from the list.
 	 *
 	 * @param string $name
-	 * @return Spoon\Template\Template
+	 * @return Spoon\Template\Environment
 	 */
 	public function removeModifier($name)
 	{
@@ -355,7 +357,7 @@ class Environment
 	 * Remove a tag from the list.
 	 *
 	 * @param string $name
-	 * @return Spoon\Template\Template
+	 * @return Spoon\Template\Environment
 	 */
 	public function removeTag($name)
 	{
@@ -367,7 +369,7 @@ class Environment
 	 * Set the template caching directory.
 	 *
 	 * @param string $cache The location where the cached templates should be stored.
-	 * @return Spoon\Template\Template
+	 * @return Spoon\Template\Environment
 	 */
 	public function setCache($cache)
 	{
@@ -379,7 +381,7 @@ class Environment
 	 * Set the charset.
 	 *
 	 * @param string $charset The default charset to use.
-	 * @return Spoon\Template\Template
+	 * @return Spoon\Template\Environment
 	 */
 	public function setCharset($charset)
 	{
