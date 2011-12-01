@@ -23,13 +23,12 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class LexerTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var Lexer
+	 * @var Spoon\Template\Lexer
 	 */
 	protected $lexer;
 
 	protected function setUp()
 	{
-		parent::setUp();
 		Autoloader::register();
 		$this->lexer = new Lexer(new Environment());
 	}
@@ -37,7 +36,6 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 	protected function tearDown()
 	{
 		$this->lexer = null;
-		parent::tearDown();
 	}
 
 	public function testVariable()
@@ -163,6 +161,48 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 				new Token(Token::STRING, 'var', 1),
 				new Token(Token::PUNCTUATION, ')', 1),
 				new Token(Token::VAR_END, null, 1),
+				new Token(Token::EOF, null, 1)
+			)
+		);
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
+	}
+
+	public function testBlock()
+	{
+		// basic block
+		$source = '{foo}';
+		$expected = new TokenStream(
+			array(
+				new Token(Token::BLOCK_START, null, 1),
+				new Token(Token::NAME, 'foo', 1),
+				new Token(Token::BLOCK_END, null, 1),
+				new Token(Token::EOF, null, 1)
+			)
+		);
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
+
+		// operators
+		$source = '{foo or and not == != < > >= <= + - * / % ~}';
+		$expected = new TokenStream(
+			array(
+				new Token(Token::BLOCK_START, null, 1),
+				new Token(Token::NAME, 'foo', 1),
+				new Token(Token::OPERATOR, 'or', 1),
+				new Token(Token::OPERATOR, 'and', 1),
+				new Token(Token::OPERATOR, 'not', 1),
+				new Token(Token::OPERATOR, '==', 1),
+				new Token(Token::OPERATOR, '!=', 1),
+				new Token(Token::OPERATOR, '<', 1),
+				new Token(Token::OPERATOR, '>', 1),
+				new Token(Token::OPERATOR, '>=', 1),
+				new Token(Token::OPERATOR, '<=', 1),
+				new Token(Token::OPERATOR, '+', 1),
+				new Token(Token::OPERATOR, '-', 1),
+				new Token(Token::OPERATOR, '*', 1),
+				new Token(Token::OPERATOR, '/', 1),
+				new Token(Token::OPERATOR, '%', 1),
+				new Token(Token::OPERATOR, '~', 1),
+				new Token(Token::BLOCK_END, null, 1),
 				new Token(Token::EOF, null, 1)
 			)
 		);
