@@ -10,7 +10,6 @@
 */
 
 namespace Spoon\Template;
-use Spoon\Template\Environment;
 
 /**
  * Creates an array of token objects from source code.
@@ -68,7 +67,7 @@ class Lexer
 	/**
 	 * The template environment.
 	 *
-	 * @var Environment
+	 * @var Spoon\Template\Environment
 	 */
 	protected $environment;
 
@@ -119,9 +118,7 @@ class Lexer
 	protected $tokens;
 
 	/**
-	 * Constructor.
-	 *
-	 * @param Environment $environment
+	 * @param Spoon\Template\Environment $environment
 	 */
 	public function __construct(Environment $environment)
 	{
@@ -253,7 +250,7 @@ class Lexer
 	 */
 	protected function processExpression()
 	{
-		// dit dient om spaties op kaka plaatsen te negeren.
+		// used to ignore spaces at stupid places
 		if(preg_match('/\s+/A', $this->source, $match, null, $this->cursor))
 		{
 			$this->moveCursor($match[0]);
