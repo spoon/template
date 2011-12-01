@@ -25,7 +25,6 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		parent::setUp();
 		Autoloader::register();
 		$this->environment = new Environment();
 	}
@@ -54,6 +53,19 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 		$this->environment->addModifier('9', 'dump');
 		$this->environment->addModifier('_', 'dump');
 		$this->environment->addModifier('du mp', 'dump');
+	}
+
+	public function testAddTag()
+	{
+		$this->environment->addTag('foreach', 'Spoon\Template\Parser\ForNode');
+	}
+
+	/**
+	 * @expectedException Spoon\Template\Exception
+	 */
+	public function testAddTagFailure()
+	{
+		$this->environment->addTag('if', 'Spoon\Template\Environment');
 	}
 
 	public function testDisableAutoEscape()
@@ -151,9 +163,18 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 
 	public function testRemoveModifier()
 	{
-		$this->environment->addModifier('dump', 'spoon\debug\Debug::dump');
-		$this->environment->removeModifier('dump');
-		$this->assertEquals(array(), $this->environment->getModifiers());
+		$expected = $this->environment->getModifiers();
+		$this->environment->addModifier('custom', 'custom_function');
+		$this->environment->removeModifier('custom');
+		$this->assertEquals($expected, $this->environment->getModifiers());
+	}
+
+	public function testRemoveTag()
+	{
+		$expected = $this->environment->getTags();
+		$this->environment->addTag('blub', 'Spoon\Template\Parser\IfNode');
+		$this->environment->removeTag('blub');
+		$this->assertEquals($expected, $this->environment->getTags());
 	}
 
 	public function testSetCache()
