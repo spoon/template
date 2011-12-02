@@ -43,11 +43,6 @@ class Renderer extends Template
 		$i = 1;
 		foreach($elements as $index => $value)
 		{
-			/*
-			 * First element is always special, because this is always an element in the context
-			 * array
-			 */
-
 			// first element is custom
 			if($i == 1)
 			{
