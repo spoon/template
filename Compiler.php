@@ -129,7 +129,6 @@ class Compiler
 	 */
 	public function write()
 	{
-		// compile template
 		$source = $this->compile();
 
 		// file location
