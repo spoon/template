@@ -111,7 +111,7 @@ class TokenStream
 	}
 
 	/**
-	 * Is this the end of the stream.
+	 * Is this the end of the token stream.
 	 *
 	 * @return bool
 	 */
@@ -121,7 +121,7 @@ class TokenStream
 	}
 
 	/**
-	 * Look to another token without changing the current positon.
+	 * Look at another token without changing the current positon.
 	 *
 	 * @return Spoon\Template\Token
 	 * @param int[optional] $number
