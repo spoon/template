@@ -26,7 +26,6 @@ class WriterTest extends \PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		parent::setUp();
 		Autoloader::register();
 		$this->writer = new Writer();
 	}
@@ -34,7 +33,6 @@ class WriterTest extends \PHPUnit_Framework_TestCase
 	protected function tearDown()
 	{
 		$this->writer = null;
-		parent::tearDown();
 	}
 
 	public function testGetSource()
