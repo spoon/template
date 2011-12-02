@@ -51,7 +51,18 @@ class TokenTest extends \PHPUnit_Framework_TestCase
 
 	public function testTest()
 	{
-		// @todo implement test
+		// different token type
+		$token = new Token(Token::NAME, '$blub', 3);
+		$this->assertFalse($token->test(Token::BLOCK_END));
+
+		// no values
+		$this->assertTrue($token->test(Token::NAME));
+
+		// no valid values
+		$this->assertFalse($token->test(Token::NAME, array('one', 'two', 'three')));
+
+		// valid value
+		$this->assertTrue($token->test(Token::NAME, array('$blub', '$bleb', '$blab')));
 	}
 
 	public function testTypeToString()

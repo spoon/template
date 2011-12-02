@@ -103,7 +103,7 @@ class Token
 	/**
 	 * Returns the value.
 	 *
-	 * @return mixed This method can return a string or an integer.
+	 * @return mixed This method can return either a string or an integer.
 	 */
 	public function getValue()
 	{
@@ -111,9 +111,7 @@ class Token
 	}
 
 	/**
-	 * Test some assertions.
-	 *
-	 * @todo refactor this method
+	 * Test some assertions about this token.
 	 *
 	 * @param string $type
 	 * @param array[optional] $values
@@ -130,7 +128,7 @@ class Token
 
 			elseif($values !== null)
 			{
-				return $this->value === $values;
+				return ($this->value === $values);
 			}
 
 			return true;
@@ -142,8 +140,8 @@ class Token
 	/**
 	 * Returns the type as a string representation.
 	 *
-	 * @return string
 	 * @param int $type
+	 * @return string
 	 */
 	public static function typeToString($type)
 	{
