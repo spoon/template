@@ -33,7 +33,7 @@ class ElseIfNode extends IfNode
 		$this->cleanup();
 
 		$writer->outdent();
-		$writer->write('elseif(' . $this->output . "):\n");
+		$writer->write('elseif(' . $this->output . "):\n", $this->line);
 		$writer->indent();
 	}
 }

@@ -15,7 +15,7 @@ use Spoon\Template\Environment;
 use Spoon\Template\Writer;
 
 /**
- * @todo document me
+ * Writes the else node to the writer.
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
@@ -29,7 +29,7 @@ class ElseNode extends Node
 	public function compile(Writer $writer)
 	{
 		$writer->outdent();
-		$writer->write("else:\n");
+		$writer->write("else:\n", $this->line);
 		$writer->indent();
 	}
 }

@@ -15,7 +15,7 @@ use Spoon\Template\Token;
 use Spoon\Template\Writer;
 
 /**
- * @todo document me
+ * Writes the if node to the writer.
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
@@ -54,7 +54,7 @@ class IfNode extends Node
 		$this->validateBrackets();
 		$this->cleanup();
 
-		$writer->write('if(' . $this->output . "):\n");
+		$writer->write('if(' . $this->output . "):\n", $this->line);
 		$writer->indent();
 	}
 

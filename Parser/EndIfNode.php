@@ -15,7 +15,7 @@ use Spoon\Template\Environment;
 use Spoon\Template\Writer;
 
 /**
- * @todo document me
+ * Writes the endif node to the writer.
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
@@ -29,6 +29,6 @@ class EndIfNode extends Node
 	public function compile(Writer $writer)
 	{
 		$writer->outdent();
-		$writer->write("endif;\n");
+		$writer->write("endif;\n", $this->line);
 	}
 }
