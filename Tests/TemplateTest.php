@@ -20,9 +20,9 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class TemplateTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var Spoon\Template
+	 * @var Spoon\Template\Template
 	 */
-	private $template;
+	protected  $template;
 
 	protected function setUp()
 	{

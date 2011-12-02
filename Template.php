@@ -115,7 +115,7 @@ class Template
 	 */
 	public function render($filename, array $variables = null)
 	{
-		// template exists and is readable
+		// template doesn't exist or isnt readable
 		if(!file_exists($filename) || !is_readable($filename))
 		{
 			throw new Exception(sprintf('The template "%s" does not exist.', $filename));
