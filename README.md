@@ -7,7 +7,7 @@ This is a stand alone template component part of Spoon Library.
 
 ##Modifiers
 Modifiers are functions you can apply to variables. They can be chained and even contain
-subvariables as arguments. They\'re executed from left to right.
+subvariables as arguments. They're executed from left to right.
 
 	{$name|dump}
 	{$name|uppercase}
