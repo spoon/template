@@ -77,5 +77,66 @@ location of the template wherin the include tag resides. Following examples are 
 	{include '/home/spoon/' . $directory . '/template.tpl'}
 
 ##Control structures
-### If else
+### If, elseif, else
+There are quite a few possibilities. I've listed some of the most commonly used ones and if you
+use your imagination you can come up with a lot more examples.
+
+	{if $name} ... {endif}
+	
+	{if $name == 'Davy'} ... {endif}
+	
+	{if $name != 'Davy' and $name != 'Erik'} ... {endif}
+	
+As you can see subvariables can be used within if constructions. The same rules as with PHP are
+applied to these constructions. You can use and combine the following expressions:
+
+or, and, ==, !=, <, >, >=, <=, +, -, *, /, %
+
+You can also use elseif and else constructions.
+
+	{if $name == 'Davy'}
+		...
+	{else}
+		...
+	{endif}
+
+Or you could just use one (ore more) elseif statement(s) which could look like this:
+
+	{if $name == 'Davy'}
+		...
+	{elseif $name == 'Dave'}
+		...
+	{elseif $name == 'Jelmer'}
+		...
+	{else}
+		...
+	{endif}
+
 ### For loop
+The for loop is used to loop over arrays or objects. The best way to explain is by showing an
+example.
+
+	{for $dog in $animals}
+		{$dog}
+	{endfor}
+
+There are some custom loop specific variables you can access while doing loops.
+
+* loop.count, number of items in the loop
+* loop.first
+* loop.last,
+* loop.index, counter starting from 1.
+* loop.key
+* loop._parent, the parent context of this loop.
+
+These extra variables might come in handy for template designers. A brief example below.
+
+	{if $users}
+		<ul>
+			{for $user in $users}
+				<li{if $loop.first} class="first"{endif}>
+					{$loop.index} - {$user}
+				</li>
+			{endfor}
+		</ul>
+	{endif}
