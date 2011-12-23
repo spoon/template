@@ -56,6 +56,7 @@ class Compiler
 		$stream = $lexer->tokenize(file_get_contents($this->filename), basename($this->filename));
 
 		// unique class based on the filename
+		// @todo fix problem with '-' in classes
 		$class = $this->template->getEnvironment()->getCacheFilename($this->filename);
 		$class = 'S' . substr($class, 0, -8) . '_Template';
 
