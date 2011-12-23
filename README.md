@@ -60,7 +60,12 @@ The same rules apply as with regular variables concerning the chaining of subvar
 	{$name|sprintf($foo.bar.baz)}
 
 ##Comments
-Explain comments
+You can use single or multiline comments. The template code between the tags will not be rendered.
+
+	{* single line comment *}
+	{*
+		multiline comment
+	*}
 
 ##Including templates
 The 'include' tag is used to include other templates. The path is always based on the
