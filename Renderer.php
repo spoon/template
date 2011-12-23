@@ -22,6 +22,7 @@ class Renderer extends Template
 	 * Method used to fetch the actual value based on the context and a list of keys.
 	 *
 	 * @todo refactor?
+	 * @todo $context should be optional and act that way by returning null if so
 	 *
 	 * @param array $context
 	 * @param array $elements
