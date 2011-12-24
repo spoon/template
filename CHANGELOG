@@ -1,4 +1,4 @@
-0.1 (xxxx-xx-xx)
+0.1 (2011-12-24)
 ----
 - Changed the internal architecture to work with a tokenizer.
 - When a cached template is written, this is now done using a temp file to prevent errors if some
