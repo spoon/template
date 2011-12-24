@@ -14,13 +14,13 @@ use Spoon\Template\Autoloader;
 use Spoon\Template\Environment;
 use Spoon\Template\TokenStream;
 use Spoon\Template\Token;
-use Spoon\Template\Parser\Text;
+use Spoon\Template\Parser\TextNode;
 use Spoon\Template\Writer;
 
 require_once realpath(dirname(__FILE__) . '/../') . '/Autoloader.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
-class TextTest extends \PHPUnit_Framework_TestCase
+class TextNodeTest extends \PHPUnit_Framework_TestCase
 {
 	/**
 	 * @var Spoon\Template\Environment
@@ -55,7 +55,7 @@ class TextTest extends \PHPUnit_Framework_TestCase
 			)
 		);
 
-		$text = new Text($stream, $this->environment);
+		$text = new TextNode($stream, $this->environment);
 		$text->compile($this->writer);
 		$this->assertEquals($expected, $this->writer->getSource());
 	}
