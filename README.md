@@ -2,8 +2,31 @@
 ##Introduction</h2>
 This standalone template component is a part of Spoon Library.
 
+##Usage
+It's pretty straightforward to start using templates. All you need to do to get started is setting
+up the autoloader.
+
+	// fetch and register autoloader
+	require_once 'Spoon/Template/Autoloader.php';
+	Autoloader::register();
+	
+	$template = new Template(new Environment());
+	$template->assign('name', 'Davy Hellemans');
+	$template->render('index.tpl');
+
+##Environments
+As you can see in the previous example, the Template class requires an 'Environment' object
+in the constructor. This class is used to define settings for your templates. The following
+things can be set in the 'environment':
+
+* auto escape: if enabled (default) this will escape all variables in the template output.
+* auto reload: if enabled (default) this will only regenerate the cached template if the source file has changed.
+* cache: the location where to place the cached templates.
+* charset: the charset you wish to use, default is the current directory.
+* debug: if enabled this will make some extra variables available.
+
 ##Variables
-###Syntax
+###Template Syntax
 The most basic example looks like this:
 
 	{$name}
