@@ -12,7 +12,7 @@
 namespace Spoon\Template;
 
 /**
- * Class used to render the actual template.
+ * Class used as a base class for the rendered template.
  *
  * @author Davy Hellemans <davy@spoon-library.com>
  */
