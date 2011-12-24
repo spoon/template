@@ -49,7 +49,7 @@ class VariableTest extends \PHPUnit_Framework_TestCase
 	{
 		// {$foo}
 		$expected = "// line 1\n";
-		$expected .= 'echo $this->getVar($context, array(\'foo\'));' . "\n";
+		$expected .= 'echo htmlspecialchars($this->getVar($context, array(\'foo\')), ENT_COMPAT, \'utf-8\');' . "\n";
 		$stream = new TokenStream(
 			array(
 				new Token(Token::VAR_START, null, 1),
