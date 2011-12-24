@@ -15,7 +15,7 @@ use Spoon\Template\Environment;
 use Spoon\Template\TokenStream;
 use Spoon\Template\Token;
 use Spoon\Template\Writer;
-use Spoon\Template\Parser\Variable;
+use Spoon\Template\Parser\VariableNode;
 
 require_once realpath(dirname(__FILE__) . '/../') . '/Autoloader.php';
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -62,7 +62,7 @@ class VariableTest extends \PHPUnit_Framework_TestCase
 		// skip VAR_START
 		$stream->next();
 
-		$variable = new Variable($stream, $this->environment);
+		$variable = new VariableNode($stream, $this->environment);
 		$variable->compile($this->writer);
 		$this->assertEquals($expected, $this->writer->getSource());
 	}
