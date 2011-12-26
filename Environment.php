@@ -380,12 +380,12 @@ class Environment
 	/**
 	 * Set the charset.
 	 *
-	 * @param string $charset The default charset to use.
+	 * @param string $value The default charset to use.
 	 * @return Spoon\Template\Environment
 	 */
-	public function setCharset($charset)
+	public function setCharset($value)
 	{
-		$this->charset = (string) $charset;
+		$this->charset = (string) $value;
 		return $this;
 	}
 }
