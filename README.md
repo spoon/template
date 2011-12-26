@@ -1,5 +1,5 @@
-#Template component</h1>
-##Introduction</h2>
+#Template component
+##Introduction
 This standalone template component is a part of Spoon Library.
 
 ##Usage
