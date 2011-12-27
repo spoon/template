@@ -53,6 +53,8 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($object->email, $this->template->get('email'));
 		$this->template->assign('person', $object);
 		$this->assertEquals($object, $this->template->get('person'));
+
+		$this->assertSame($this->template, $this->template->assign('key', 'value'));
 	}
 
 	public function testGet()
@@ -66,5 +68,8 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 		$this->template->assign('name', 'Davy Hellemans');
 		$this->template->remove('name');
 		$this->assertEquals(null, $this->template->get('name'));
+
+		$this->template->assign('name', 'Davy Hellemans');
+		$this->assertSame($this->template, $this->template->remove('name'));
 	}
 }

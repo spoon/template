@@ -51,6 +51,7 @@ class WriterTest extends \PHPUnit_Framework_TestCase
 		$this->writer->indent();
 		$this->writer->write("second level\n");
 		$this->assertEquals("\tone level\n\t\tsecond level\n", $this->writer->getSource());
+		$this->assertSame($this->writer, $this->writer->indent());
 	}
 
 	public function testOutdent()
@@ -59,6 +60,7 @@ class WriterTest extends \PHPUnit_Framework_TestCase
 		$this->writer->outdent(8);
 		$this->writer->write('I like birds');
 		$this->assertEquals("\t\tI like birds", $this->writer->getSource());
+		$this->assertSame($this->writer, $this->writer->outdent());
 	}
 
 	public function testOutdentBelowZero()

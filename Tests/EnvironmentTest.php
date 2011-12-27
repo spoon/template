@@ -43,6 +43,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 		$this->environment->addModifier('a_9', 'dump');
 		$this->environment->addModifier('a9_', 'dump');
 		$this->environment->addModifier('a9_', 'dump');
+		$this->assertSame($this->environment, $this->environment->addModifier('a', 'dump'));
 	}
 
 	/**
@@ -57,7 +58,10 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 
 	public function testAddTag()
 	{
-		$this->environment->addTag('foreach', 'Spoon\Template\Parser\ForNode');
+		$this->assertSame(
+			$this->environment,
+			$this->environment->addTag('foreach', 'Spoon\Template\Parser\ForNode')
+		);
 	}
 
 	/**
@@ -72,36 +76,42 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->environment->disableAutoEscape();
 		$this->assertFalse($this->environment->isAutoEscape());
+		$this->assertSame($this->environment, $this->environment->disableAutoEscape());
 	}
 
 	public function testDisableAutoReload()
 	{
 		$this->environment->disableAutoReload();
 		$this->assertFalse($this->environment->isAutoReload());
+		$this->assertSame($this->environment, $this->environment->disableAutoReload());
 	}
 
 	public function testDisableDebug()
 	{
 		$this->environment->disableDebug();
 		$this->assertFalse($this->environment->isDebug());
+		$this->assertSame($this->environment, $this->environment->disableDebug());
 	}
 
 	public function testEnableAutoEscape()
 	{
 		$this->environment->enableAutoEscape();
 		$this->assertTrue($this->environment->isAutoEscape());
+		$this->assertSame($this->environment, $this->environment->enableAutoEscape());
 	}
 
 	public function testEnableAutoReload()
 	{
 		$this->environment->enableAutoReload();
 		$this->assertTrue($this->environment->isAutoReload());
+		$this->assertSame($this->environment, $this->environment->enableAutoReload());
 	}
 
 	public function testEnableDebug()
 	{
 		$this->environment->enableDebug();
 		$this->assertTrue($this->environment->isDebug());
+		$this->assertSame($this->environment, $this->environment->enableDebug());
 	}
 
 	public function testGetCache()
@@ -167,6 +177,9 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 		$this->environment->addModifier('custom', 'custom_function');
 		$this->environment->removeModifier('custom');
 		$this->assertEquals($expected, $this->environment->getModifiers());
+
+		$this->environment->addModifier('custom', 'custom_function');
+		$this->assertSame($this->environment, $this->environment->removeModifier('custom'));
 	}
 
 	public function testRemoveTag()
@@ -175,17 +188,22 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 		$this->environment->addTag('blub', 'Spoon\Template\Parser\IfNode');
 		$this->environment->removeTag('blub');
 		$this->assertEquals($expected, $this->environment->getTags());
+
+		$this->environment->addTag('blub', 'Spoon\Template\Parser\IfNode');
+		$this->assertSame($this->environment, $this->environment->removeTag('blug'));
 	}
 
 	public function testSetCache()
 	{
 		$this->environment->setCache(__DIR__);
 		$this->assertEquals(__DIR__, $this->environment->getCache());
+		$this->assertSame($this->environment, $this->environment->setCache('.'));
 	}
 
 	public function testSetCharset()
 	{
 		$this->environment->setCharset('iso-8859-1');
 		$this->assertEquals('iso-8859-1', $this->environment->getCharset());
+		$this->assertSame($this->environment, $this->environment->setCharset('utf-8'));
 	}
 }
