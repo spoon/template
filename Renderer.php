@@ -94,6 +94,13 @@ class Renderer extends Template
 						else $variable = $variable->$method();
 					}
 
+					// magic getter
+					elseif(method_exists($variable, '__get') && is_callable(array($variable, '__get')))
+					{
+						if($element !== null) $variable = $variable->$element;
+						else $variable = '';
+					}
+
 					// everythine failed
 					else $variable = null;
 				}

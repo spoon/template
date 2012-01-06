@@ -106,5 +106,26 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 			$this->environment->isAutoEscape(),
 			$this->renderer->getVar($this->context, array('template', 'environment', 'isAutoEscape'))
 		);
+
+		// magic getter
+		$this->context = array('dummyObject' => new dummyObject());
+		$this->assertEquals(
+			'magicGetter',
+			$this->renderer->getVar($this->context, array('dummyObject', 'magicGetter'))
+		);
+	}
+}
+
+/**
+ * This is a dummy class so we can test the magic getter
+ *
+ * @author Jelmer Snoeck <jelmer.snoeck@siphoc.com>
+ */
+class dummyObject
+{
+	// the magic getter to test
+	public function __get($value)
+	{
+		return $value;
 	}
 }
