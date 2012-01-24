@@ -72,4 +72,12 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 		$this->template->assign('name', 'Davy Hellemans');
 		$this->assertSame($this->template, $this->template->remove('name'));
 	}
+
+	/**
+	 * @expectedException Spoon\Template\Exception
+	 */
+	public function testRenderException()
+	{
+		$this->template->render('foo-bar-baz.tpl');
+	}
 }
