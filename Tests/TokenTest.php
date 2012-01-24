@@ -34,6 +34,15 @@ class TokenTest extends \PHPUnit_Framework_TestCase
 		$this->token = null;
 	}
 
+	public function testToString()
+	{
+		$expected = '[line]: ' . $this->token->getLine() . "\n";
+		$expected .= '[type]: ' . Token::typeToString($this->token->getType()) . "\n";
+		$expected .= '[value]: ' . $this->token->getValue() . "\n";
+
+		$this->assertEquals($expected, (string) $this->token);
+	}
+
 	public function testGetLine()
 	{
 		$this->assertEquals(1, $this->token->getLine());
