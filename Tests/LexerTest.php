@@ -208,4 +208,15 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 		);
 		$this->assertEquals($expected, $this->lexer->tokenize($source));
 	}
+
+	public function testComment()
+	{
+		$source = '{* This is a comment *}';
+		$expected = new TokenStream(
+			array(
+				new Token(Token::EOF, null, 1)
+			)
+		);
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
+	}
 }
