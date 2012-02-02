@@ -1,3 +1,8 @@
+0.2 (xxxx-xx-xx)
+----
+- Added tests for the Autoloader class
+
+
 0.1 (2011-12-24)
 ----
 - Changed the internal architecture to work with a tokenizer.
