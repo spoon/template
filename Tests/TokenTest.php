@@ -67,6 +67,12 @@ class TokenTest extends \PHPUnit_Framework_TestCase
 		// no values
 		$this->assertTrue($token->test(Token::NAME));
 
+		// exactly the right value
+		$this->assertTrue($token->test(Token::NAME, '$blub'));
+
+		// wrong value
+		$this->assertFalse($token->test(Token::NAME, '$foo'));
+
 		// no valid values
 		$this->assertFalse($token->test(Token::NAME, array('one', 'two', 'three')));
 
