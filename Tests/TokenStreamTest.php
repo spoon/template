@@ -55,6 +55,7 @@ class TokenStreamTest extends \PHPUnit_Framework_TestCase
 
 		// expecting NAME with value '$name'
 		$this->stream->expect(Token::NAME, 'name');
+		$this->assertTrue(true);
 	}
 
 	/**
