@@ -108,6 +108,14 @@ class TokenStreamTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($token, $this->stream->look(4));
 	}
 
+	/**
+	 * @expectedException Spoon\Template\SyntaxError
+	 */
+	public function testLookFailure()
+	{
+		$this->stream->look(999);
+	}
+
 	public function testNext()
 	{
 		$token = new Token(Token::VAR_START, null, 1);
