@@ -1,6 +1,7 @@
 0.2 (xxxx-xx-xx)
 ----
 - Added tests for the Autoloader class
+- Syntax has changed for block elements, check README.md
 
 
 0.1 (2011-12-24)

@@ -106,7 +106,7 @@ class Lexer
 	 */
 	protected $tags = array(
 		'comment' => array('{*', '*}'),
-		'block' => array('{', '}'),
+		'block' => array('{%', '%}'),
 		'variable' => array('{$', '}')
 	);
 
@@ -148,7 +148,7 @@ class Lexer
 	protected function processBlock()
 	{
 		// matching end comment tag has been found
-		if(preg_match('/\s*\}\s*\n?/A', $this->source, $match, null, $this->cursor))
+		if(preg_match('/\s*\%\}\s*\n?/A', $this->source, $match, null, $this->cursor))
 		{
 			$this->addToken(Token::BLOCK_END);
 			$this->moveCursor($match[0]);
@@ -238,7 +238,7 @@ class Lexer
 				$this->state = self::STATE_VAR;
 				break;
 
-			case '{':
+			case '{%':
 				$this->addToken(Token::BLOCK_START);
 				$this->state = self::STATE_BLOCK;
 				break;

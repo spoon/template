@@ -170,7 +170,7 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 	public function testBlock()
 	{
 		// basic block
-		$source = '{foo}';
+		$source = '{% foo %}';
 		$expected = new TokenStream(
 			array(
 				new Token(Token::BLOCK_START, null, 1),
@@ -182,7 +182,7 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($expected, $this->lexer->tokenize($source));
 
 		// operators
-		$source = '{foo or and not == != < > >= <= + - * / % ~}';
+		$source = '{% foo or and not == != < > >= <= + - * / % ~ %}';
 		$expected = new TokenStream(
 			array(
 				new Token(Token::BLOCK_START, null, 1),
