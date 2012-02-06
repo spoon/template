@@ -267,4 +267,13 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 		$source = '{% if ) %}';
 		$this->lexer->tokenize($source);
 	}
+
+	/**
+	 * @expectedException Spoon\Template\SyntaxError
+	 */
+	public function testUnexpectedBracket()
+	{
+		$source = '{% if $foo == (}) %}';
+		$this->lexer->tokenize($source);
+	}
 }
