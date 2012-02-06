@@ -32,7 +32,7 @@ class TokenStreamTest extends \PHPUnit_Framework_TestCase
 
 		$template = 'Name: {$name}' . "\n";
 		$template .= 'E-mail: {$email|lowercase}' . "\n\n";
-		$template .= '{if $name == $email}chill mate{endif}' . "\n";
+		$template .= '{% if $name == $email %}chill mate{% endif %}' . "\n";
 
 		$lexer = new Lexer(new Environment());
 		$this->stream = $lexer->tokenize($template, 'imaginary-template.tpl');
