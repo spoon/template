@@ -249,4 +249,22 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 		$source = '{% ha!';
 		$this->lexer->tokenize($source);
 	}
+
+	/**
+	 * @expectedException Spoon\Template\SyntaxError
+	 */
+	public function testExpressionUnexpectedEnd()
+	{
+		$source = '{% if $value == ';
+		$this->lexer->tokenize($source);
+	}
+
+	/**
+	 * @expectedException Spoon\Template\SyntaxError
+	 */
+	public function testUnexpectedClosingBrackets()
+	{
+		$source = '{% if ) %}';
+		$this->lexer->tokenize($source);
+	}
 }
