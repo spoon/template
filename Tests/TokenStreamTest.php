@@ -124,6 +124,17 @@ class TokenStreamTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($this->stream->look(), $this->stream->next());
 	}
 
+	/**
+	 * @expectedException Spoon\Template\SyntaxError
+	 */
+	public function testNextFailure()
+	{
+		for($i = 1; $i < 100; $i++)
+		{
+			$this->stream->next();
+		}
+	}
+
 	public function testPrevious()
 	{
 		$token = $this->stream->getCurrent();
