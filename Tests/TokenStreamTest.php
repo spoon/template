@@ -43,6 +43,20 @@ class TokenStreamTest extends \PHPUnit_Framework_TestCase
 		$this->stream = null;
 	}
 
+	public function testToString()
+	{
+		$stream = new TokenStream(
+			array(
+				new Token(Token::TEXT, 'I am a piece of text', 1),
+				new Token(Token::EOF, null, 1)
+			)
+		);
+
+		$expected = "[line]: 1\n[type]: TEXT\n[value]: I am a piece of text\n\n";
+		$expected .= "[line]: 1\n[type]: EOF\n[value]: \n";
+		$this->assertEquals($expected, (string) $stream);
+	}
+
 	public function testExpect()
 	{
 		// expecting TEXT type with 'Name: ' as value
