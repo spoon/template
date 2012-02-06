@@ -219,4 +219,25 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 		);
 		$this->assertEquals($expected, $this->lexer->tokenize($source));
 	}
+
+	/**
+	 * @expectedException Spoon\Template\SyntaxError
+	 */
+	public function testUnclosedComment()
+	{
+		$source = '{* This is an unterminated comment';
+		$this->lexer->tokenize($source);
+	}
+
+	public function testTextTemplate()
+	{
+		$source = 'This is just a piece of text.';
+		$expected = new TokenStream(
+			array(
+				new Token(Token::TEXT, $source, 1),
+				new Token(Token::EOF, null, 1)
+			)
+		);
+		$this->assertEquals($expected, $this->lexer->tokenize($source));
+	}
 }
