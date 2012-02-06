@@ -240,4 +240,13 @@ class LexerTest extends \PHPUnit_Framework_TestCase
 		);
 		$this->assertEquals($expected, $this->lexer->tokenize($source));
 	}
+
+	/**
+	 * @expectedException Spoon\Template\SyntaxError
+	 */
+	public function testUnlexableSource()
+	{
+		$source = '{% ha!';
+		$this->lexer->tokenize($source);
+	}
 }
