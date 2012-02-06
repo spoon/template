@@ -94,21 +94,21 @@ You can use single or multiline comments. The template code between the tags wil
 The 'include' tag is used to include other templates. The path is always based on the
 location of the template wherin the include tag resides. Following examples are ok.
 
-	{include 'template.tpl'}
-	{include $template}
-	{include $path . '/template.tpl'}
-	{include '/home/spoon/' . $directory . '/template.tpl'}
+	{% include 'template.tpl' %}
+	{% include $template %}
+	{% include $path . '/template.tpl' %}
+	{% include '/home/spoon/' . $directory . '/template.tpl' %}
 
 ##Control structures
 ### If, elseif, else
 There are quite a few possibilities. I've listed some of the most commonly used ones and if you
 use your imagination you can come up with a lot more examples.
 
-	{if $name} ... {endif}
+	{% if $name %} ... {% endif %}
 	
-	{if $name == 'Davy'} ... {endif}
+	{% if $name == 'Davy' %} ... {% endif %}
 	
-	{if $name != 'Davy' and $name != 'Erik'} ... {endif}
+	{% if $name != 'Davy' and $name != 'Erik' %} ... {% endif %}
 	
 As you can see subvariables can be used within if constructions. The same rules as with PHP are
 applied to these constructions. You can use and combine the following expressions:
@@ -117,31 +117,31 @@ or, and, ==, !=, <, >, >=, <=, +, -, *, /, %
 
 You can also use elseif and else constructions.
 
-	{if $name == 'Davy'}
+	{% if $name == 'Davy' %}
 		...
-	{else}
+	{% else %}
 		...
-	{endif}
+	{% endif %}
 
 Or you could just use one (ore more) elseif statement(s) which could look like this:
 
-	{if $name == 'Davy'}
+	{% if $name == 'Davy' %}
 		...
-	{elseif $name == 'Dave'}
+	{% elseif $name == 'Dave' %}
 		...
-	{elseif $name == 'Jelmer'}
+	{% elseif $name == 'Jelmer' %}
 		...
-	{else}
+	{% else %}
 		...
-	{endif}
+	{% endif %}
 
 ### For loop
 The for loop is used to loop over arrays or objects. The best way to explain is by showing an
 example.
 
-	{for $dog in $animals}
+	{% for $dog in $animals %}
 		{$dog}
-	{endfor}
+	{% endfor %}
 
 There are some custom loop specific variables you can access while doing loops.
 
@@ -154,12 +154,12 @@ There are some custom loop specific variables you can access while doing loops.
 
 These extra variables might come in handy for template designers. A brief example below.
 
-	{if $users}
+	{% if $users %}
 		<ul>
-			{for $user in $users}
-				<li{if $loop.first} class="first"{endif}>
+			{% for $user in $users %}
+				<li{% if $loop.first %} class="first"{% endif %}>
 					{$loop.index} - {$user}
 				</li>
-			{endfor}
+			{% endfor %}
 		</ul>
-	{endif}
+	{% endif %}
