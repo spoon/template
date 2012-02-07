@@ -67,9 +67,17 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException Spoon\Template\Exception
 	 */
-	public function testAddTagFailure()
+	public function testAddTagFailureClass()
 	{
 		$this->environment->addTag('if', 'Spoon\Template\Environment');
+	}
+
+	/**
+	 * @expectedException Spoon\Template\Exception
+	 */
+	public function testAddTagFailureSyntax()
+	{
+		$this->environment->addTag('foo bar', 'Spoon\Template\Parser\ForNode');
 	}
 
 	public function testDisableAutoEscape()
