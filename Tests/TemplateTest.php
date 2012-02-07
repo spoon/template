@@ -28,11 +28,21 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 	{
 		Autoloader::register();
 		$this->template = new Template(new Environment());
+
+		$this->clearCache();
 	}
 
 	protected function tearDown()
 	{
 		$this->template = null;
+	}
+
+	protected function clearCache()
+	{
+		foreach(glob(dirname(__FILE__) . '/cache/*.php') as $filename)
+		{
+			@unlink($filename);
+		}
 	}
 
 	public function testAssign()
