@@ -68,6 +68,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 		// objects
 		$template = new Template($this->environment);
 		$this->context['template'] = $template;
+		$this->context['dummyObject'] = new dummyObject();
 	}
 
 	protected function tearDown()
@@ -77,7 +78,10 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 
 	public function testGetVar()
 	{
-		// strings
+		// string key doesn't exist
+		$this->assertNull($this->renderer->getVar($this->context, array('foobar')));
+
+		// string keys
 		$this->assertEquals(
 			$this->context['name'],
 			$this->renderer->getVar($this->context, array('name'))
@@ -87,7 +91,7 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 			$this->renderer->getVar($this->context, array('message'))
 		);
 
-		// arrays
+		// arrays elements
 		$this->assertEquals(
 			$this->context['users'][1]['name'],
 			$this->renderer->getVar($this->context, array('users', 1, 'name'))
@@ -97,22 +101,62 @@ class RendererTest extends \PHPUnit_Framework_TestCase
 			$this->renderer->getVar($this->context, array('users', 2, 'hobbies', 0))
 		);
 
-		// objects
+		// public method
 		$this->assertEquals(
 			$this->environment->isAutoEscape(),
-			$this->renderer->getVar($this->context, array('template', 'getEnvironment', 'isAutoEscape'))
+			$this->renderer->getVar(
+				$this->context, array('template', 'getEnvironment', 'isAutoEscape')
+			)
 		);
+
+		// public method with arguments
 		$this->assertEquals(
-			$this->environment->isAutoEscape(),
-			$this->renderer->getVar($this->context, array('template', 'environment', 'isAutoEscape'))
+			'my_argument',
+			$this->renderer->getVar(
+				$this->context, array('dummyObject', 'method' => array('my_argument'))
+			)
+		);
+
+		// public property
+		$this->assertEquals(
+			'baz',
+			$this->renderer->getVar($this->context, array('dummyObject', 'foobar'))
+		);
+
+		// public getter (without 'get' prefix)
+		$this->assertEquals(
+			'some_value',
+			$this->renderer->getVar(
+				$this->context, array('dummyObject', 'status')
+			)
+		);
+
+		// public getter with argument (without 'get' prefix)
+		$this->assertEquals(
+			'some_value',
+			$this->renderer->getVar(
+				$this->context, array('dummyObject', 'status' => array('Davy'))
+			)
 		);
 
 		// magic getter
-		$this->context = array('dummyObject' => new dummyObject());
 		$this->assertEquals(
 			'magicGetter',
 			$this->renderer->getVar($this->context, array('dummyObject', 'magicGetter'))
 		);
+
+		// magic getter (with strange arguments)
+		$this->assertNull(
+			$this->renderer->getVar($this->context, array('dummyObject', 'test' => null))
+		);
+
+		// not an object nor array
+		$this->context['resouce'] = fopen(__FILE__, 'r');
+		$this->assertNull($this->renderer->getVar($this->context, array('resouce', 'method')));
+
+		// unknown method
+		$this->context['foobar'] = new \stdClass();
+		$this->assertNull($this->renderer->getVar($this->context, array('foobar', 'do_something')));
 	}
 }
 
@@ -123,9 +167,21 @@ class RendererTest extends \PHPUnit_Framework_TestCase
  */
 class dummyObject
 {
+	public $foobar = 'baz';
+
 	// the magic getter to test
 	public function __get($value)
 	{
 		return $value;
+	}
+
+	public function getStatus($value = null)
+	{
+		return 'some_value';
+	}
+
+	public function method($argument)
+	{
+		return $argument;
 	}
 }
