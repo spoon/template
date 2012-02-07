@@ -57,6 +57,14 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame($this->template, $this->template->assign('key', 'value'));
 	}
 
+	/**
+	 * @expectedException PHPUnit_Framework_Error
+	 */
+	public function testAssignFailure()
+	{
+		$this->template->assign('foobar');
+	}
+
 	public function testGet()
 	{
 		$this->template->assign('name', 'Davy Hellemans');
