@@ -32,7 +32,7 @@ class Template
 	 *
 	 * @var array
 	 */
-	protected $variables;
+	protected $variables = array();
 
 	/**
 	 * @param Spoon\Template\Environment $environment
