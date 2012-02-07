@@ -91,6 +91,13 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame($this->template, $this->template->remove('name'));
 	}
 
+	public function testRender()
+	{
+		$this->template->getEnvironment()->setCache(dirname(__FILE__) . '/cache');
+		$this->template->render(dirname(__FILE__) . '/templates/example.tpl');
+		$this->assertTrue(true);
+	}
+
 	/**
 	 * @expectedException Spoon\Template\Exception
 	 */
