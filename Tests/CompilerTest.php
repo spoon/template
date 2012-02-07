@@ -67,4 +67,11 @@ class CompilerTest extends \PHPUnit_Framework_TestCase
 		$compiler->write();
 		$this->assertTrue(true);
 	}
+
+	public function testCompileVariableToken()
+	{
+		$compiler = new Compiler($this->template, $this->path . '/variable_token.tpl');
+		$compiler->write();
+		$this->assertTrue(true);
+	}
 }
