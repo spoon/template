@@ -60,4 +60,11 @@ class CompilerTest extends \PHPUnit_Framework_TestCase
 		$compiler = new Compiler($this->template, $this->path . '/no_such_tag.tpl');
 		$compiler->write();
 	}
+
+	public function testCompileBlockToken()
+	{
+		$compiler = new Compiler($this->template, $this->path . '/block_token.tpl');
+		$compiler->write();
+		$this->assertTrue(true);
+	}
 }
