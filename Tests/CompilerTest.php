@@ -51,4 +51,13 @@ class CompilerTest extends \PHPUnit_Framework_TestCase
 		$compiler->write();
 		$this->assertTrue(true);
 	}
+
+	/**
+	 * @expectedException Spoon\Template\SyntaxError
+	 */
+	public function testNonExistingTag()
+	{
+		$compiler = new Compiler($this->template, $this->path . '/no_such_tag.tpl');
+		$compiler->write();
+	}
 }
