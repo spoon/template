@@ -116,7 +116,8 @@ class Environment
 			'else' => 'Spoon\Template\Parser\ElseNode',
 			'endif' => 'Spoon\Template\Parser\EndIfNode',
 			'for' => 'Spoon\Template\Parser\ForNode',
-			'endfor' => 'Spoon\Template\Parser\EndForNode'
+			'endfor' => 'Spoon\Template\Parser\EndForNode',
+			'debug' => 'Spoon\Template\Parser\DebugNode'
 		);
 	}
 

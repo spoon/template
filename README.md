@@ -163,3 +163,10 @@ These extra variables might come in handy for template designers. A brief exampl
 			{% endfor %}
 		</ul>
 	{% endif %}
+
+##Debug
+You can see which variables are available in the current template by using the debug tag.
+This will use var_dump to show the contents of the assigned template variables.
+
+	{% debug %}
+
