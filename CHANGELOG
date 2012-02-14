@@ -2,6 +2,7 @@
 ----
 - Added tests for the Autoloader class
 - Syntax has changed for block elements, check README.md
+- Added debug tag, used for displaying the assigned template variables.
 
 
 0.1 (2011-12-24)
