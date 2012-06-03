@@ -39,7 +39,7 @@ class TokenStream
 	protected $tokens;
 
 	/**
-	 * @param Spoon\Template\Environment $environment
+	 * @param \Spoon\Template\Environment $environment
 	 * @param string[optional] $filename
 	 */
 	public function __construct(array $tokens, $filename = null)

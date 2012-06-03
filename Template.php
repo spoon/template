@@ -23,7 +23,7 @@ class Template
 	/**
 	 * The configuration for this template.
 	 *
-	 * @var Spoon\Template\Environment
+	 * @var \Spoon\Template\Environment
 	 */
 	protected $environment;
 
@@ -35,7 +35,7 @@ class Template
 	protected $variables = array();
 
 	/**
-	 * @param Spoon\Template\Environment $environment
+	 * @param \Spoon\Template\Environment $environment
 	 */
 	public function __construct(Environment $environment)
 	{
@@ -47,7 +47,7 @@ class Template
 	 *
 	 * @param mixed $variable The key to search for or an array/object with keys & values.
 	 * @param mixed[optional] $value The value to replace the key with. Optional if first is array/object.
-	 * @return Spoon\Template\Template
+	 * @return \Spoon\Template\Template
 	 */
 	public function assign($variable, $value = null)
 	{
@@ -88,7 +88,7 @@ class Template
 	/**
 	 * Returns the environment configuration object.
 	 *
-	 * @return Spoon\Template\Environment
+	 * @return \Spoon\Template\Environment
 	 */
 	public function getEnvironment()
 	{
@@ -99,7 +99,7 @@ class Template
 	 * Remove a variable from the list.
 	 *
 	 * @param string $variable The key to remove.
-	 * @return Spoon\Template\Template
+	 * @return \Spoon\Template\Template
 	 */
 	public function remove($variable)
 	{

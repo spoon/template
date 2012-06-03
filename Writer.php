@@ -53,7 +53,7 @@ class Writer
 	 * Indents one or more levels.
 	 *
 	 * @param int[optional] $level
-	 * @return Spoon\Template\Writer
+	 * @return \Spoon\Template\Writer
 	 */
 	public function indent($level = 1)
 	{
@@ -65,7 +65,7 @@ class Writer
 	 * Outdents one or more levels.
 	 *
 	 * @param int[optional] $level
-	 * @return Spoon\Template\Writer
+	 * @return \Spoon\Template\Writer
 	 */
 	public function outdent($level = 1)
 	{
@@ -78,7 +78,7 @@ class Writer
 	 *
 	 * @param string $value
 	 * @param int[optional] $line
-	 * @return Spoon\Template\Writer
+	 * @return \Spoon\Template\Writer
 	 */
 	public function write($value, $line = null)
 	{

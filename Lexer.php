@@ -67,7 +67,7 @@ class Lexer
 	/**
 	 * The template environment.
 	 *
-	 * @var Spoon\Template\Environment
+	 * @var \Spoon\Template\Environment
 	 */
 	protected $environment;
 
@@ -118,7 +118,7 @@ class Lexer
 	protected $tokens;
 
 	/**
-	 * @param Spoon\Template\Environment $environment
+	 * @param \Spoon\Template\Environment $environment
 	 */
 	public function __construct(Environment $environment)
 	{
@@ -372,7 +372,7 @@ class Lexer
 	 *
 	 * @param string $source
 	 * @param string[optional] $filename
-	 * @return Spoon\Template\TokenStream
+	 * @return \Spoon\Template\TokenStream
 	 */
 	public function tokenize($source, $filename = null)
 	{
