@@ -1,8 +1,8 @@
-#Template component
-##Introduction
+# Template component
+## Introduction
 This standalone template component is a part of Spoon Library.
 
-##Usage
+## Usage
 It's pretty straightforward to start using templates. All you need to do to get started is setting
 up the autoloader.
 
@@ -14,7 +14,7 @@ up the autoloader.
 	$template->assign('name', 'Davy Hellemans');
 	$template->render('index.tpl');
 
-##Environments
+## Environments
 As you can see in the previous example, the Template class requires an 'Environment' object
 in the constructor. This class is used to define settings for your templates. The following
 things can be set in the 'environment':
@@ -25,8 +25,8 @@ things can be set in the 'environment':
 * charset: the charset you wish to use, default is the current directory.
 * debug: if enabled this will make some extra variables available.
 
-##Variables
-###Template Syntax
+## Variables
+### Template Syntax
 The most basic example looks like this:
 
 	{$name}
@@ -44,7 +44,7 @@ This has several implications as to what 'bar' actually is.
 
 If none of the checks above give any results, null is returned as with simple variables.
 
-###Modifiers
+### Modifiers
 Modifiers are functions you can apply to variables. They can be chained and even contain
 subvariables as arguments. They're executed from left to right.
 
@@ -64,7 +64,7 @@ below are ok and should work just fine.
 	$environment->mapModifier('date', array(new MyClass(), 'date'));
 	$environment->mapModifier('test', function($value){ return test($value) });
 
-###Arguments
+### Arguments
 Arguments can be either strings, integers or subvariables.
 
 	{$name|substring(0, 5}}
@@ -73,7 +73,7 @@ Arguments can be either strings, integers or subvariables.
 
 As you can see. There's no need to encapsulate the subvariable with brackets.
 
-###Subvariables
+### Subvariables
 As seen in the example above, subvariables can be used in a nifty way. However there are some
 restrictions. At this moment it's not possible to apply modifiers to subvariables. I'm planning
 to add this in the future.
@@ -82,7 +82,7 @@ The same rules apply as with regular variables concerning the chaining of subvar
 
 	{$name|sprintf($foo.bar.baz)}
 
-##Comments
+## Comments
 You can use single or multiline comments. The template code between the tags will not be rendered.
 
 	{* single line comment *}
@@ -90,7 +90,7 @@ You can use single or multiline comments. The template code between the tags wil
 		multiline comment
 	*}
 
-##Including templates
+## Including templates
 The 'include' tag is used to include other templates. The path is always based on the
 location of the template wherin the include tag resides. Following examples are ok.
 
@@ -99,7 +99,7 @@ location of the template wherin the include tag resides. Following examples are 
 	{% include $path . '/template.tpl' %}
 	{% include '/home/spoon/' . $directory . '/template.tpl' %}
 
-##Control structures
+## Control structures
 ### If, elseif, else
 There are quite a few possibilities. I've listed some of the most commonly used ones and if you
 use your imagination you can come up with a lot more examples.
@@ -164,7 +164,7 @@ These extra variables might come in handy for template designers. A brief exampl
 		</ul>
 	{% endif %}
 
-##Debug
+## Debug
 You can see which variables are available in the current template by using the debug tag.
 This will use var_dump to show the contents of the assigned template variables.
 
